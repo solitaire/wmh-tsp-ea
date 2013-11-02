@@ -16,19 +16,17 @@
 \maketitle
 
 \section{Zadanie}
-Celem zadania jest zaprojektowanie algorytmu ewolucyjnego, który zostanie wykorzystany do rozwiązania problemu komiwojażera. \\
-
-W ramach zadania zostanie zaprojektowana reprezentacja rozwiązania, metoda sukcesji, operatory genetyczne (mutacja, krzyżowanie).
-
-Z punktu widzenia przydatności projektowanego algorytmu istotne jest przetestowanie go dla różnych parametrów, w szczególności dla:
+Celem zadania jest zaprojektowanie algorytmu ewolucyjnego, który zostanie wykorzystany do rozwiązania problemu komiwojażera.
+Zaprojektowana została reprezentacja rozwiązania, metoda sukcesji oraz operatory mutacji i krzyżowania. 
+Z punktu widzenia przydatności projektowanego algorytmu, istotne jest przetestowanie go dla różnych parametrów, w szczególności dla:
 \begin{itemize}
-	\item różnych wartości prawdopodobieństwa mutacji i krzyżowania,
-	\item grafów o różnej wielkości.
+	\item różnych wartości prawdopodobieństwa mutacji $p_m$ i krzyżowania $p_c$,
+	\item grafów o różnej liczbie wierzchołków $n$.
 \end{itemize}
 
 \section{Założenia}
-Realizowana aplikacja będzie pracowała w trybie konsolowym i będzie przyjmowała
-pliki z danymi przekazany na strumień wejściowy.
+Aplikacja będzie pracować w trybie konsolowym. Na standardowe wejście podawane będą pliki tekstowe zawierające opis grafów.
+Program będzie wypisywał odpowiedź na standardowe wyjście.
 
 \subsection{Reprezentacja rozwiązań}
 
@@ -36,35 +34,34 @@ Wierzchołki grafu numerujemy od 1 do $n$. $n > 2$. Rozwiązanie reprezentujemy 
 Dla skrócenia zapisu stosujemy zapis 123, zamiast $(1,2,3)$. Przykładowo, w grafie pełnym o 3 wierzchołkach możliwych jest $3!$ rozwiązań: 123, 132, 213, 231, 312, 321.
 Warto zauważyć, że połowę tych rozwiązań można pominąć, ze względu na to, że koszt przejścia z $a$ do $b$ jest zawsze 
 taki sam jak z $b$ do $a$. Można zatem pominąć rozwiązania $231, 312, 321$. Pozostałe trzy rozwiązania mają identyczny koszt,
-zatem dwa z nich również można pominąć. Tym samym jedyne interesujące nas rozwiązanie to $123$. W ogólnym przypadku, dla grafu pełnego
-o $n$ wierzchołkach, liczba interesujących nas rozwiązań wynosi $\frac{(n-1)!}{2}$. Spośród redundantnych rozwiązań pozostawiane będą te,
+zatem dwa z nich również można pominąć. Tym samym jedyne interesujące nas rozwiązanie to $123$.
+W ogólnym przypadku, dla grafu pełnegoo $n$ wierzchołkach, liczba interesujących nas rozwiązań wynosi $\frac{(n-1)!}{2}$. Spośród redundantnych rozwiązań pozostawiane będą te,
 których reprezentacja liczbowa jest najmniejsza. Przykładowo, dla grafu pełnego o $4$ wierzchołkach zamiast rozpatrywać wszystkie
-24 rozwiązania, będziemy rozpatrywać tylko 3: 1234, 1324, 1342.
-
-\subsection{Funkcja celu}
-
-Wartość funkcji celu dla rozwiązania to suma wag krawędzi w cyklu dla danego rozwiązania.
-
+24 rozwiązania, będziemy rozpatrywać tylko 3: 1234, 1324, 1342. 
+Wartość funkcji celu to suma wag krawędzi w cyklu dla danego rozwiązania.
 \subsection{Operator mutacji}
 
-Operator mutacji otrzymuje na wejściu rozwiązanie długości $n$ i zwraca również rozwiązanie długości $n$.
+Operator mutacji otrzymuje na wejściu prawdopobieństwo mutacji $p_m$ oraz rozwiązanie długości $n$.
+Zwraca rozwiązanie długości $n$.
 
 \begin{enumerate}
+ \item Liczba powtórzeń $R = \lceil n \cdot  p_m \rceil$. Powtórz $R$ razy następujące kroki:
  \item Wylosuj indeks $i$ od 0 do $n-1$ zgodnie z rozkładem jednostajnym.
  \item Wylosuj indeks $j$ od 0 do $n-1$, ale różny od $i$, zgodnie z rozkładem jednostajnym.
- \item Zamień liczbę na pozycji $i$-tej w wejściowym ciągu z liczbą na pozycji $j$-tej.
+ \item Zamień liczbę na pozycji $i$-tej w ciągu z liczbą na pozycji $j$-tej.
 \end{enumerate}
 
 \subsection{Operator krzyżowania}
 
-Operator krzyżowania na wejściu przyjmuje dwa rozwiązania długości $n$ (rodziców) i zwraca również dwa rozwiązania długości $n$ (potomków). 
+% operator krzyżowania trzeba uzależnić od prawdopodobieństwa krzyżowania p_c %
 
-Jako operator krzyżowania zostanie wykorzystany operator krzyżowania {PMX} (z częściowym odwzorowaniem).
-
-Operator krzyżowania jest opisany dwoma punktami krzyżowania: $i$, $j$
+Operator krzyżowania na wejściu otrzymuje dwa rozwiązania rodzicielskie długości $n$ i zwraca dwa rozwiązania potomne długości $n$. 
+Jako operator krzyżowania zostanie wykorzystany operator krzyżowania {PMX}[referencja by sie przydała] (z częściowym odwzorowaniem).
+Operator krzyżowania jest opisany dwoma punktami krzyżowania: $i$, $j$.
 \begin{enumerate}
-	\item Dla sekwencji od $i$ o $i+j$ dokonaj wymiany,
-	\item Skopiuj pozostałe części sekwencji (od $0$ do $i-1$ i od $j+1$ do $n$), dokonując niezbędnych zmian, aby rozwiązania potomne były permutacjami.
+ \item Dla sekwencji od $i$ do $i+j$ dokonaj wymiany, % hmm jak on tej wymiany dokonuje? %
+ \item Skopiuj pozostałe części sekwencji (od $0$ do $i-1$ i od $j+1$ do $n$), dokonując niezbędnych zmian, aby rozwiązania potomne były permutacjami.
+ % tez takie czary-mary troche, nie wiem jak wygladaja te niezbędne zmiany  %
 \end{enumerate}
 
 \subsection{Metoda sukcesji}
@@ -78,17 +75,18 @@ Metoda sukcesji na wejściu otrzymuje dwie populacje o rozmiarze $NP$: starą or
 \end{enumerate}
 
 \subsection{Schemat algorytmu ewolucyjnego}
+
 \begin{algorithm}[!htb]
-\caption{Algorytm ewolucyjny}\label{ea}
+\label{ea}
 \begin{algorithmic}[1]
 
 \Function{algorytm\_ewolucyjny}{}
 	\State $P(0) \gets \{x_1, x_2, \ldots, x_n\}$
 	\State $t \gets 0$
 	\While{$! stop$}
-    	\For{$i = 1$ \bf{to} $i = n$}
-    		\If{$a < p_c$}
-    			\State $O(t,i) \gets mutacja(crossover(selekcja(P(t),k)))$
+    	\For{$i = 0$ \bf{to} $i = n - 1$}
+    		\If{$U(1) < p_c$}
+    			\State $O(t,i) \gets mutacja(crossover(selekcja(P(t), 2)))$
     		\Else
     			\State $O(t,i) \gets mutacja(selekcja(P(t),1))$
     		\EndIf
