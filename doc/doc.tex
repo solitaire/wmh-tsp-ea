@@ -10,6 +10,7 @@
 \author{Anna Stępień \\ Adam Stelmaszczyk}
 \date{}
 \setlength{\parindent}{0in}
+\makeatletter\renewcommand{\ALG@name}{}
 
 \begin{document}
 \maketitle
@@ -77,8 +78,27 @@ Metoda sukcesji na wejściu otrzymuje dwie populacje o rozmiarze $NP$: starą or
 \end{enumerate}
 
 \subsection{Schemat algorytmu ewolucyjnego}
+\begin{algorithm}[!htb]
+\caption{Algorytm ewolucyjny}\label{ea}
+\begin{algorithmic}[1]
 
-% pseudokod jak u Arabasa co jest po czym po kolei %
+\Function{algorytm\_ewolucyjny}{}
+	\State $P(0) \gets \{x_1, x_2, \ldots, x_n\}$
+	\State $t \gets 0$
+	\While{$! stop$}
+    	\For{$i = 1$ \bf{to} $i = n$}
+    		\If{$a < p_c$}
+    			\State $O(t,i) \gets mutacja(crossover(selekcja(P(t),k)))$
+    		\Else
+    			\State $O(t,i) \gets mutacja(selekcja(P(t),1))$
+    		\EndIf
+    	\EndFor
+    \State $P(t+1) \gets sukcesja(P(t),O(t))$
+    \State $t \gets t+1$
+  	\EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
 
 \nocite{*}
 \bibliographystyle{plain}
