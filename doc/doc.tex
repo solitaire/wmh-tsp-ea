@@ -3,13 +3,13 @@
 \usepackage{polski}
 \usepackage{hyperref}
 \usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage{geometry}
 \title{\textbf{Zastosowanie algorytmu ewolucyjnego do rozwiązywania problemu komiwojażera}}
 \author{Anna Stępień \\ Adam Stelmaszczyk}
 \date{}
 \setlength{\parindent}{0in}
-
-\newgeometry{tmargin=2.5cm, bmargin=2.5cm, lmargin=3cm, rmargin=3cm}
 
 \begin{document}
 \maketitle
@@ -28,6 +28,49 @@ Z punktu widzenia przydatności projektowanego algorytmu istotne jest przetestow
 \section{Założenia}
 Realizowana aplikacja będzie pracowała w trybie konsolowym i będzie przyjmowała
 pliki z danymi przekazany na strumień wejściowy.
+
+\subsection{Reprezentacja rozwiązań}
+
+Wierzchołki grafu numerujemy od 1 do $n$. $n > 2$. Rozwiązanie reprezentujemy jako ciąg długości $n$, złożony z unikalnych liczb. 
+Dla skrócenia zapisu stosujemy zapis 123, zamiast $(1,2,3)$. Przykładowo, w grafie pełnym o 3 wierzchołkach możliwych jest $3!$ rozwiązań: 123, 132, 213, 231, 312, 321.
+Warto zauważyć, że połowę tych rozwiązań można pominąć, ze względu na to, że koszt przejścia z $a$ do $b$ jest zawsze 
+taki sam jak z $b$ do $a$. Można zatem pominąć rozwiązania $231, 312, 321$. Pozostałe trzy rozwiązania mają identyczny koszt,
+zatem dwa z nich również można pominąć. Tym samym jedyne interesujące nas rozwiązanie to $123$. W ogólnym przypadku, dla grafu pełnego
+o $n$ wierzchołkach, liczba interesujących nas rozwiązań wynosi $\frac{(n-1)!}{2}$. Spośród redundantnych rozwiązań pozostawiane będą te,
+których reprezentacja liczbowa jest najmniejsza. Przykładowo, dla grafu pełnego o $4$ wierzchołkach zamiast rozpatrywać wszystkie
+24 rozwiązania, będziemy rozpatrywać tylko 3: 1234, 1324, 1342.
+
+\subsection{Funkcja celu}
+
+Wartość funkcji celu dla rozwiązania to suma wag krawędzi w cyklu dla danego rozwiązania.
+
+\subsection{Operator mutacji}
+
+Operator mutacji otrzymuje na wejściu rozwiązanie długości $n$ i zwraca również rozwiązanie długości $n$.
+
+\begin{enumerate}
+ \item Wylosuj indeks $i$ od 0 do $n-1$ zgodnie z rozkładem jednostajnym.
+ \item Wylosuj indeks $j$ od 0 do $n-1$, ale różny od $i$, zgodnie z rozkładem jednostajnym.
+ \item Zamień liczbę na pozycji $i$-tej w wejściowym ciągu z liczbą na pozycji $j$-tej.
+\end{enumerate}
+
+\subsection{Operator krzyżowania}
+
+% jakiś prosty, jak coś masz to dawaj %
+
+\subsection{Metoda sukcesji}
+
+Metoda sukcesji na wejściu otrzymuje dwie populacje o rozmiarze $NP$: starą oraz nową. Wyjsciem jest jedna populacja o rozmiarze $NP$.
+
+% może lepiej zamienić to na pseudokod %
+\begin{enumerate}
+ \item Dla $i$ od 0 do $NP-1$:
+ \item Na pozycji $i$ w wyjściowej populacji ustaw rozwiązanie lepsze z pary stara[i], nowa[i].
+\end{enumerate}
+
+\subsection{Schemat algorytmu ewolucyjnego}
+
+% pseudokod jak u Arabasa co jest po czym po kolei %
 
 \nocite{*}
 \bibliographystyle{plain}
