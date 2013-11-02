@@ -56,11 +56,19 @@ Operator mutacji otrzymuje na wejściu rozwiązanie długości $n$ i zwraca rów
 
 \subsection{Operator krzyżowania}
 
-% jakiś prosty, jak coś masz to dawaj %
+Operator krzyżowania na wejściu przyjmuje dwa rozwiązania długości $n$ (rodziców) i zwraca również dwa rozwiązania długości $n$ (potomków). 
+
+Jako operator krzyżowania zostanie wykorzystany operator krzyżowania {PMX} (z częściowym odwzorowaniem).
+
+Operator krzyżowania jest opisany dwoma punktami krzyżowania: $i$, $j$
+\begin{enumerate}
+	\item Dla sekwencji od $i$ o $i+j$ dokonaj wymiany,
+	\item Skopiuj pozostałe części sekwencji (od $0$ do $i-1$ i od $j+1$ do $n$), dokonując niezbędnych zmian, aby rozwiązania potomne były permutacjami.
+\end{enumerate}
 
 \subsection{Metoda sukcesji}
 
-Metoda sukcesji na wejściu otrzymuje dwie populacje o rozmiarze $NP$: starą oraz nową. Wyjsciem jest jedna populacja o rozmiarze $NP$.
+Metoda sukcesji na wejściu otrzymuje dwie populacje o rozmiarze $NP$: starą oraz nową. Wyjściem jest jedna populacja o rozmiarze $NP$.
 
 % może lepiej zamienić to na pseudokod %
 \begin{enumerate}
