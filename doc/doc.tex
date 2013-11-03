@@ -38,7 +38,31 @@ zatem dwa z nich również można pominąć. Tym samym jedyne interesujące nas 
 W ogólnym przypadku, dla grafu pełnegoo $n$ wierzchołkach, liczba interesujących nas rozwiązań wynosi $\frac{(n-1)!}{2}$. Spośród redundantnych rozwiązań pozostawiane będą te,
 których reprezentacja liczbowa jest najmniejsza. Przykładowo, dla grafu pełnego o $4$ wierzchołkach zamiast rozpatrywać wszystkie
 24 rozwiązania, będziemy rozpatrywać tylko 3: 1234, 1324, 1342. 
-Wartość funkcji celu to suma wag krawędzi w cyklu dla danego rozwiązania.
+Wartość funkcji celu $f$ to suma wag krawędzi w cyklu dla danego rozwiązania.
+
+\subsection{Schemat algorytmu ewolucyjnego}
+
+\begin{algorithm}[!htb]
+\label{ea}
+\begin{algorithmic}[1]
+\Function{algorytm\_ewolucyjny}{}
+	\State $P(0) \gets \{x_1, x_2, \ldots, x_n\}$
+	\State $t \gets 0$
+	\While{$! stop$}
+    	\For{$i = 0$ \bf{to} $i = n - 1$}
+    		\If{$U(1) < p_c$}
+    			\State $O(t,i) \gets mutacja(crossover(selekcja(P(t), 2)))$
+    		\Else
+    			\State $O(t,i) \gets mutacja(selekcja(P(t),1))$
+    		\EndIf
+    	\EndFor
+    \State $P(t+1) \gets sukcesja(P(t),O(t))$
+    \State $t \gets t+1$
+  	\EndWhile
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
 \subsection{Operator mutacji}
 
 Operator mutacji otrzymuje na wejściu prawdopobieństwo mutacji $p_m$ oraz rozwiązanie długości $n$.
@@ -64,34 +88,19 @@ Operator krzyżowania jest opisany dwoma punktami krzyżowania: $i$, $j$.
 
 \subsection{Metoda sukcesji}
 
-Metoda sukcesji na wejściu otrzymuje dwie populacje o rozmiarze $NP$: starą oraz nową. Wyjściem jest jedna populacja o rozmiarze $NP$.
-
-% może lepiej zamienić to na pseudokod %
-\begin{enumerate}
- \item Dla $i$ od 0 do $NP-1$:
- \item Na pozycji $i$ w wyjściowej populacji ustaw rozwiązanie lepsze z pary stara[i], nowa[i].
-\end{enumerate}
-
-\subsection{Schemat algorytmu ewolucyjnego}
+Metoda sukcesji na wejściu otrzymuje dwie populacje o rozmiarze $NP$: aktualną $P$ oraz populację mutantów $O$.
+Wyjściem jest jedna populacja o rozmiarze $NP$.
 
 \begin{algorithm}[!htb]
-\label{ea}
 \begin{algorithmic}[1]
-
-\Function{algorytm\_ewolucyjny}{}
-	\State $P(0) \gets \{x_1, x_2, \ldots, x_n\}$
-	\State $t \gets 0$
-	\While{$! stop$}
-    	\For{$i = 0$ \bf{to} $i = n - 1$}
-    		\If{$U(1) < p_c$}
-    			\State $O(t,i) \gets mutacja(crossover(selekcja(P(t), 2)))$
-    		\Else
-    			\State $O(t,i) \gets mutacja(selekcja(P(t),1))$
-    		\EndIf
-    	\EndFor
-    \State $P(t+1) \gets sukcesja(P(t),O(t))$
-    \State $t \gets t+1$
-  	\EndWhile
+\Function{sukcesja}{}
+  \For{$i = 0$ \bf{to} $i = NP - 1$}
+    \If{$f(O(t, i)) < f(P(t, i)) $}
+      \State $P(t+1, i) \gets O(t, i)$
+    \Else
+      \State $P(t+1, i) \gets P(t, i)$
+    \EndIf
+  \EndFor
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
