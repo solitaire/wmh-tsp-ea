@@ -6,6 +6,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{geometry}
+\usepackage[table]{xcolor}
 \title{\textbf{Zastosowanie algorytmu ewolucyjnego do rozwiązywania problemu komiwojażera}}
 \author{Anna Stępień \\ Adam Stelmaszczyk}
 \date{}
@@ -78,12 +79,61 @@ Zwraca rozwiązanie długości $n$.
 \subsection{Operator krzyżowania}
 
 Operator krzyżowania na wejściu otrzymuje dwa rozwiązania rodzicielskie długości $n$ i zwraca dwa rozwiązania potomne długości $n$. 
-Jako operator krzyżowania zostanie wykorzystany operator krzyżowania {PMX}[referencja by sie przydała] (z częściowym odwzorowaniem).
-Operator krzyżowania jest opisany dwoma punktami krzyżowania: $i$, $j$.
+
+Jako operator krzyżowania zostanie wykorzystany operator krzyżowania z częściowym odwzorowaniem -- {PMX} (ang. partially mapped crossover).
 \begin{enumerate}
- \item Dla sekwencji od $i$ do $i+j$ dokonaj wymiany, % hmm jak on tej wymiany dokonuje? %
- \item Skopiuj pozostałe części sekwencji (od $0$ do $i-1$ i od $j+1$ do $n$), dokonując niezbędnych zmian, aby rozwiązania potomne były permutacjami.
- % tez takie czary-mary troche, nie wiem jak wygladaja te niezbędne zmiany  %
+ \item Wylosowanie dwóch liczb $i$, $j$ z przedziału od $0$ do $n-1$.
+ \item Dla sekwencji od $i$ do $j$ dokonaj wymiany części rozwiązań pomiędzy rozwiązaniami rodzicielskimi, tworząc w ten sposób dwa rozwiązania potomne.
+ \item Na podstawie skopiowanej sekwencji od $i$ do $j$ utwórz wzajemne odwzorowanie rozwiązań rodzicielskich.
+ \item Na postawie odwzorowania powstałego w poprzednim punkcie dokonaj korekty pozostałych części rozwiązania (od $0$ do $i-1$ i od $j+1$ do $n-1$).
+\end{enumerate}
+
+Przykładowo, dla następujących rozwiązań rodzicielskich i $i = 2$ i $j = 5$:\\
+
+Rodzic 1
+\begin{tabular}{ | c | c | c | c | c | c | c | c |}
+  \hline
+  2 & 6 &  \cellcolor{green!25}7 & \cellcolor{green!25}1 & \cellcolor{green!25}5 & \cellcolor{green!25}4 & 8 & 3 \\ \hline
+\end{tabular}\\
+
+Rodzic 2
+\begin{tabular}{ | c | c | c | c | c | c | c | c |}
+  \hline
+  7 & 5 & \cellcolor{blue!25}6 & \cellcolor{blue!25}3 & \cellcolor{blue!25}8 & \cellcolor{blue!25}2 & 1 & 4 \\ \hline
+\end{tabular}\\
+
+\begin{enumerate}
+ 	\item Krok 2 -- wymiana sekwencji\\
+Potomek 1
+\begin{tabular}{ | c | c | c | c | c | c | c | c |}
+  \hline
+  2 & 6 & \cellcolor{blue!25}6 & \cellcolor{blue!25}3 & \cellcolor{blue!25}8 & \cellcolor{blue!25}2 & 8 & 3 \\ \hline
+\end{tabular}\\
+
+Potomek 2
+\begin{tabular}{ | c | c | c | c | c | c | c | c |}
+  \hline
+  7 & 5 &  \cellcolor{green!25}7 & \cellcolor{green!25}1 & \cellcolor{green!25}5 & \cellcolor{green!25}4 & 1 & 4 \\ \hline
+\end{tabular}\\
+
+\item Krok 3 -- utworzenie odwzorowania\\
+$6 - 7$\\
+$3 - 1$\\
+$5 - 8$\\
+$2 - 4$\\
+
+\item Krok 4 -- korekta rozwiązania\\
+Potomek 1
+\begin{tabular}{ | c | c | c | c | c | c | c | c |}
+  \hline
+  4 & 7 & \cellcolor{blue!25}6 & \cellcolor{blue!25}3 & \cellcolor{blue!25}8 & \cellcolor{blue!25}2 & 5 & 1 \\ \hline
+\end{tabular}\\
+
+Potomek 2
+\begin{tabular}{ | c | c | c | c | c | c | c | c |}
+  \hline
+  6 & 8 &  \cellcolor{green!25}7 & \cellcolor{green!25}1 & \cellcolor{green!25}5 & \cellcolor{green!25}4 & 3 & 2 \\ \hline
+\end{tabular}\\
 \end{enumerate}
 
 \subsection{Metoda sukcesji}
