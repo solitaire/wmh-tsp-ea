@@ -67,22 +67,21 @@ Wartość funkcji celu $f$ to suma wag krawędzi w cyklu dla danego rozwiązania
 \subsection{Operator mutacji}
 
 Operator mutacji otrzymuje na wejściu prawdopodobieństwo mutacji $p_m$ oraz rozwiązanie długości $n$.
-Zwraca rozwiązanie długości $n$.
+Zwraca rozwiązanie długości $n$, nazywane mutantem.
 
 \begin{enumerate}
+ \item Utwórz początkowego mutanta kopiując rozwiązanie wejściowe.
  \item Liczba powtórzeń $R = \lceil n \cdot  p_m \rceil$. Powtórz $R$ razy następujące kroki:
- \item Wylosuj indeks $i$ od 0 do $n-1$ zgodnie z rozkładem jednostajnym.
- \item Wylosuj indeks $j$ od 0 do $n-1$, ale różny od $i$, zgodnie z rozkładem jednostajnym.
- \item Zamień liczbę na pozycji $i$-tej w ciągu z liczbą na pozycji $j$-tej.
+ \item Wylosuj dwa różne indeksy $i, j$ od 0 do $n-1$ zgodnie z rozkładem jednostajnym.
+ \item Zamień liczbę na pozycji $i$-tej z liczbą na pozycji $j$-tej w mutancie.
 \end{enumerate}
 
 \subsection{Operator krzyżowania}
 
 Operator krzyżowania na wejściu otrzymuje dwa rozwiązania rodzicielskie długości $n$ i zwraca dwa rozwiązania potomne długości $n$. 
-
 Jako operator krzyżowania zostanie wykorzystany operator krzyżowania z częściowym odwzorowaniem -- {PMX} (ang. partially mapped crossover).
 \begin{enumerate}
- \item Wylosowanie dwóch liczb $i$, $j$ z przedziału od $0$ do $n-1$, takich, że $i \neq j$.
+ \item Wylosuj dwa różne indeksy $i, j$ od 0 do $n-1$ zgodnie z rozkładem jednostajnym.
  \item Utwórz dwa rozwiązania potomne poprzez skopiowanie rozwiązań rodzicielskich, a następnie dokonaj wymiany rozwiązania dla sekwencji od $i$ do $j$.
  \item Na podstawie skopiowanej sekwencji od $i$ do $j$ utwórz wzajemne odwzorowanie rozwiązań rodzicielskich.
  \item Dokonanie ewentualnej korekty pozostałych części rozwiązania (od $0$ do $i-1$ i od $j+1$ do $n-1$). Korekta jest konieczna w przypadku, gdy w rozwiązaniu potomnym co najmniej jeden z wierzchołków jest powtórzony. Proces korekty przebiega następująco:
@@ -92,47 +91,51 @@ Jako operator krzyżowania zostanie wykorzystany operator krzyżowania z częśc
  \end{enumerate}
 \end{enumerate}
 
-Przykładowo, dla następujących rozwiązań rodzicielskich i $i = 2$ i $j = 5$:\\
+Przykład. \\
+
+Wejściowe rozwiązania rodzicielskie: \\
 
 Rodzic 1
 \begin{tabular}{ | c | c | c | c | c | c | c | c |}
   \hline
   2 & 6 &  \cellcolor{green!25}7 & \cellcolor{green!25}1 & \cellcolor{green!25}5 & \cellcolor{green!25}4 & 8 & 3 \\ \hline
 \end{tabular}\\
-
 Rodzic 2
 \begin{tabular}{ | c | c | c | c | c | c | c | c |}
   \hline
   7 & 5 & \cellcolor{blue!25}6 & \cellcolor{blue!25}3 & \cellcolor{blue!25}8 & \cellcolor{blue!25}2 & 1 & 4 \\ \hline
-\end{tabular}\\
+\end{tabular}
 
 \begin{enumerate}
- 	\item Krok 2 -- wymiana sekwencji\\
+ \item Wylosowano $i = 2$, $j = 5$.
+
+ \item Wymiana sekwencji od $i$ do $j$. \\
+
 Potomek 1
 \begin{tabular}{ | c | c | c | c | c | c | c | c |}
   \hline
   2 & 6 & \cellcolor{blue!25}6 & \cellcolor{blue!25}3 & \cellcolor{blue!25}8 & \cellcolor{blue!25}2 & 8 & 3 \\ \hline
 \end{tabular}\\
-
 Potomek 2
 \begin{tabular}{ | c | c | c | c | c | c | c | c |}
   \hline
   7 & 5 &  \cellcolor{green!25}7 & \cellcolor{green!25}1 & \cellcolor{green!25}5 & \cellcolor{green!25}4 & 1 & 4 \\ \hline
 \end{tabular}\\
 
-\item Krok 3 -- utworzenie odwzorowania\\
+\item Utworzenie odwzorowania. \\\\
 $6 - 7$\\
 $3 - 1$\\
 $5 - 8$\\
 $2 - 4$\\
 
-\item Krok 4 -- korekta rozwiązania\\
+\item Korekta potomków. W potomku pierwszym: 2 się powtarza. Zgodnie z odwzorowaniem zostaje zamieniona na 4.
+6 się powtarza, zostaje zamieniona na 7. 8 się powtarza, zamiana na 5. 3 się powtarza, zamiana na 1. \\
+
 Potomek 1
 \begin{tabular}{ | c | c | c | c | c | c | c | c |}
   \hline
   4 & 7 & \cellcolor{blue!25}6 & \cellcolor{blue!25}3 & \cellcolor{blue!25}8 & \cellcolor{blue!25}2 & 5 & 1 \\ \hline
 \end{tabular}\\
-
 Potomek 2
 \begin{tabular}{ | c | c | c | c | c | c | c | c |}
   \hline
