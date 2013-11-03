@@ -36,7 +36,7 @@ Dla skrócenia zapisu stosujemy zapis 123, zamiast $(1,2,3)$. Przykładowo, w gr
 Warto zauważyć, że połowę tych rozwiązań można pominąć, ze względu na to, że koszt przejścia z $a$ do $b$ jest zawsze 
 taki sam jak z $b$ do $a$. Można zatem pominąć rozwiązania $231, 312, 321$. Pozostałe trzy rozwiązania mają identyczny koszt,
 zatem dwa z nich również można pominąć. Tym samym jedyne interesujące nas rozwiązanie to $123$.
-W ogólnym przypadku, dla grafu pełnegoo $n$ wierzchołkach, liczba interesujących nas rozwiązań wynosi $\frac{(n-1)!}{2}$. Spośród redundantnych rozwiązań pozostawiane będą te,
+W ogólnym przypadku, dla grafu pełnego $n$ wierzchołkach, liczba interesujących nas rozwiązań wynosi $\frac{(n-1)!}{2}$. Spośród redundantnych rozwiązań pozostawiane będą te,
 których reprezentacja liczbowa jest najmniejsza. Przykładowo, dla grafu pełnego o $4$ wierzchołkach zamiast rozpatrywać wszystkie
 24 rozwiązania, będziemy rozpatrywać tylko 3: 1234, 1324, 1342. 
 Wartość funkcji celu $f$ to suma wag krawędzi w cyklu dla danego rozwiązania.
@@ -66,7 +66,7 @@ Wartość funkcji celu $f$ to suma wag krawędzi w cyklu dla danego rozwiązania
 
 \subsection{Operator mutacji}
 
-Operator mutacji otrzymuje na wejściu prawdopobieństwo mutacji $p_m$ oraz rozwiązanie długości $n$.
+Operator mutacji otrzymuje na wejściu prawdopodobieństwo mutacji $p_m$ oraz rozwiązanie długości $n$.
 Zwraca rozwiązanie długości $n$.
 
 \begin{enumerate}
