@@ -82,10 +82,14 @@ Operator krzyżowania na wejściu otrzymuje dwa rozwiązania rodzicielskie dług
 
 Jako operator krzyżowania zostanie wykorzystany operator krzyżowania z częściowym odwzorowaniem -- {PMX} (ang. partially mapped crossover).
 \begin{enumerate}
- \item Wylosowanie dwóch liczb $i$, $j$ z przedziału od $0$ do $n-1$.
- \item Dla sekwencji od $i$ do $j$ dokonaj wymiany części rozwiązań pomiędzy rozwiązaniami rodzicielskimi, tworząc w ten sposób dwa rozwiązania potomne.
+ \item Wylosowanie dwóch liczb $i$, $j$ z przedziału od $0$ do $n-1$, takich, że $i \neq j$.
+ \item Utwórz dwa rozwiązania potomne poprzez skopiowanie rozwiązań rodzicielskich, a następnie dokonaj wymiany rozwiązania dla sekwencji od $i$ do $j$.
  \item Na podstawie skopiowanej sekwencji od $i$ do $j$ utwórz wzajemne odwzorowanie rozwiązań rodzicielskich.
- \item Na postawie odwzorowania powstałego w poprzednim punkcie dokonaj korekty pozostałych części rozwiązania (od $0$ do $i-1$ i od $j+1$ do $n-1$).
+ \item Dokonanie ewentualnej korekty pozostałych części rozwiązania (od $0$ do $i-1$ i od $j+1$ do $n-1$). Korekta jest konieczna w przypadku, gdy w rozwiązaniu potomnym co najmniej jeden z wierzchołków jest powtórzony. Proces korekty przebiega następująco:
+ \begin{enumerate}
+ 	\item Zidentyfikuj powtórzone wierzchołki w rozwiązaniu potomnym.
+ 	\item Dla każdego powtórzone wierzchołka w części rozwiązania od $0$ do $i-1$ i od $j+1$ do $n-1$ dokonaj zamiany z wierzchołkiem zgodnym z odwzorowaniem uzyskanym w poprzednim punkcie.
+ \end{enumerate}
 \end{enumerate}
 
 Przykładowo, dla następujących rozwiązań rodzicielskich i $i = 2$ i $j = 5$:\\
