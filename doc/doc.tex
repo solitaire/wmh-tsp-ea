@@ -30,7 +30,7 @@ Program będzie wypisywał odpowiedź na standardowe wyjście.
 
 \subsection{Reprezentacja rozwiązań}
 
-Wierzchołki grafu numerujemy od 1 do $n$. $n > 2$. Rozwiązanie reprezentujemy jako ciąg długości $n$, złożony z unikalnych liczb. 
+Wierzchołki grafu numerujemy od 0 do $n - 1$. $n > 2$. Rozwiązanie reprezentujemy jako ciąg długości $n$, złożony z unikalnych liczb. 
 Dla skrócenia zapisu stosujemy zapis 123, zamiast $(1,2,3)$. Przykładowo, w grafie pełnym o 3 wierzchołkach możliwych jest $3!$ rozwiązań: 123, 132, 213, 231, 312, 321.
 Warto zauważyć, że połowę tych rozwiązań można pominąć, ze względu na to, że koszt przejścia z $a$ do $b$ jest zawsze 
 taki sam jak z $b$ do $a$. Można zatem pominąć rozwiązania $231, 312, 321$. Pozostałe trzy rozwiązania mają identyczny koszt,
@@ -52,8 +52,6 @@ Zwraca rozwiązanie długości $n$.
 \end{enumerate}
 
 \subsection{Operator krzyżowania}
-
-% operator krzyżowania trzeba uzależnić od prawdopodobieństwa krzyżowania p_c %
 
 Operator krzyżowania na wejściu otrzymuje dwa rozwiązania rodzicielskie długości $n$ i zwraca dwa rozwiązania potomne długości $n$. 
 Jako operator krzyżowania zostanie wykorzystany operator krzyżowania {PMX}[referencja by sie przydała] (z częściowym odwzorowaniem).
