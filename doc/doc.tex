@@ -9,7 +9,7 @@
 \usepackage[table]{xcolor}
 \title{\textbf{Zastosowanie algorytmu ewolucyjnego do rozwiązywania problemu komiwojażera}}
 \author{Anna Stępień \\ Adam Stelmaszczyk}
-\date{}
+\date{\today}
 \setlength{\parindent}{0in}
 \makeatletter\renewcommand{\ALG@name}{}
 
@@ -51,13 +51,13 @@ Wartość funkcji celu $f$ to suma wag krawędzi w cyklu dla danego rozwiązania
 	\State $t \gets 0$
 	\While{$! stop$}
     	\For{$i = 0$ \bf{to} $i = n - 1$}
-    		\If{$U(1) < p_c$}
-    			\State $O(t,i) \gets mutacja(crossover(selekcja(P(t), 2)))$
+    		\If{$\mathcal{U}(0, 1) < p_c$}
+    			\State $O(t,i) \gets$ mutacja$($krzy{\.z}owanie$($selekcja$(P(t), 2)))$
     		\Else
-    			\State $O(t,i) \gets mutacja(selekcja(P(t),1))$
+    			\State $O(t,i) \gets$ mutacja$($selekcja$(P(t),1))$
     		\EndIf
     	\EndFor
-    \State $P(t+1) \gets sukcesja(P(t),O(t))$
+    \State $P(t+1) \gets$ sukcesja$(P(t),O(t))$
     \State $t \gets t+1$
   	\EndWhile
 \EndFunction
@@ -145,8 +145,8 @@ Potomek 2
 
 \subsection{Metoda sukcesji}
 
-Metoda sukcesji na wejściu otrzymuje dwie populacje o rozmiarze $NP$: aktualną $P$ oraz populację mutantów $O$.
-Wyjściem jest jedna populacja o rozmiarze $NP$.
+Metoda sukcesji na wejściu otrzymuje dwie populacje o rozmiarze $n$: aktualną $P$ oraz populację mutantów $O$.
+Wyjściem jest jedna populacja o rozmiarze $n$.
 
 \begin{algorithm}[!htb]
 \begin{algorithmic}[1]
