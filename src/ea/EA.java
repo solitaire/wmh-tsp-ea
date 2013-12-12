@@ -47,16 +47,33 @@ public class EA
 
 	private Solution mutate(Solution solution)
 	{
-		// TODO
-		return null;
+		Solution mutant = new Solution(solution);
+		for (int i = 0; i < mutant.cities.length; i++)
+		{
+			if (rand.nextDouble() < MUTATION_PROBABILITY)
+			{
+				int index1 = rand.nextInt(mutant.cities.length);
+				int index2 = index1;
+				do
+				{
+					index2 = rand.nextInt(mutant.cities.length);
+				}
+				while (index1 != index2);
+
+				mutant.cities[index1] = solution.cities[index2];
+				mutant.cities[index2] = solution.cities[index1];
+			}
+		}
+		return mutant;
 	}
 
 	private Solution select(Population pop)
 	{
 		return pop.solutions[rand.nextInt(N)];
 	}
-	
-	private Solution crossover(Solution parent1, Solution parent2) {
+
+	private Solution crossover(Solution parent1, Solution parent2)
+	{
 		return Crossover.generateOffSpring(parent1, parent2);
 	}
 
