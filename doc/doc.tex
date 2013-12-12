@@ -18,11 +18,11 @@
 
 \section{Zadanie}
 Celem zadania jest zaprojektowanie algorytmu ewolucyjnego, który zostanie wykorzystany do rozwiązania problemu komiwojażera.
-Zaprojektowana została reprezentacja rozwiązania, metoda sukcesji oraz operatory mutacji i krzyżowania. 
+Przedstawiona została reprezentacja rozwiązania, metoda sukcesji oraz operatory mutacji i krzyżowania. 
 Z punktu widzenia przydatności projektowanego algorytmu, istotne jest przetestowanie go dla różnych parametrów, w szczególności dla:
 \begin{itemize}
 	\item różnych wartości prawdopodobieństwa mutacji $p_m$ i krzyżowania $p_c$,
-	\item grafów o różnej liczbie wierzchołków $n$.
+	\item grafów o różnej liczbie wierzchołków $d$.
 \end{itemize}
 
 \section{Założenia}
@@ -31,15 +31,17 @@ Program będzie wypisywał odpowiedź na standardowe wyjście.
 
 \subsection{Reprezentacja rozwiązań}
 
-Wierzchołki grafu numerujemy od 0 do $n - 1$. $n > 2$. Rozwiązanie reprezentujemy jako ciąg długości $n$, złożony z unikalnych liczb. 
-Dla skrócenia zapisu stosujemy zapis 123, zamiast $(1,2,3)$. Przykładowo, w grafie pełnym o 3 wierzchołkach możliwych jest $3!$ rozwiązań: 123, 132, 213, 231, 312, 321.
+Wierzchołki grafu numerujemy od 0 do $d - 1$. $d > 2$. Rozwiązanie reprezentujemy jako ciąg długości $d$, złożony z unikalnych liczb. 
+Dla skrócenia zapisu stosujemy zapis 123, zamiast $(1,2,3)$. 
+Przykładowo, w grafie pełnym o 3 wierzchołkach możliwych jest $3!$ rozwiązań: 123, 132, 213, 231, 312, 321.
 Warto zauważyć, że połowę tych rozwiązań można pominąć, ze względu na to, że koszt przejścia z $a$ do $b$ jest zawsze 
 taki sam jak z $b$ do $a$. Można zatem pominąć rozwiązania $231, 312, 321$. Pozostałe trzy rozwiązania mają identyczny koszt,
 zatem dwa z nich również można pominąć. Tym samym jedyne interesujące nas rozwiązanie to $123$.
-W ogólnym przypadku, dla grafu pełnego $n$ wierzchołkach, liczba interesujących nas rozwiązań wynosi $\frac{(n-1)!}{2}$. Spośród redundantnych rozwiązań pozostawiane będą te,
-których reprezentacja liczbowa jest najmniejsza. Przykładowo, dla grafu pełnego o $4$ wierzchołkach zamiast rozpatrywać wszystkie
+W ogólnym przypadku, dla grafu pełnego o $d$ wierzchołkach, liczba interesujących nas rozwiązań wynosi $\frac{(d-1)!}{2}$. 
+Spośród redundantnych rozwiązań pozostawiane będą te, których reprezentacja liczbowa jest najmniejsza. 
+Przykładowo, dla grafu pełnego o $4$ wierzchołkach zamiast rozpatrywać wszystkie
 24 rozwiązania, będziemy rozpatrywać tylko 3: 1234, 1324, 1342. 
-Wartość funkcji celu $f$ to suma wag krawędzi w cyklu dla danego rozwiązania.
+Minimalizowana wartość funkcji celu $f$ to suma wag krawędzi w cyklu dla danego rozwiązania.
 
 \subsection{Schemat algorytmu ewolucyjnego}
 
@@ -66,32 +68,36 @@ Wartość funkcji celu $f$ to suma wag krawędzi w cyklu dla danego rozwiązania
 
 \subsection{Operator mutacji}
 
-Operator mutacji otrzymuje na wejściu prawdopodobieństwo mutacji $p_m$ oraz rozwiązanie długości $n$.
-Zwraca rozwiązanie długości $n$, nazywane mutantem.
+Operator mutacji otrzymuje na wejściu prawdopodobieństwo mutacji $p_m$ oraz rozwiązanie długości $d$.
+Zwraca rozwiązanie długości $d$, nazywane mutantem.
 
 \begin{enumerate}
  \item Utwórz początkowego mutanta kopiując rozwiązanie wejściowe.
- \item Liczba powtórzeń $R = \lceil n \cdot  p_m \rceil$. Powtórz $R$ razy następujące kroki:
- \item Wylosuj dwa różne indeksy $i, j$ od 0 do $n-1$ zgodnie z rozkładem jednostajnym.
+ \item Liczba powtórzeń $R = \lceil d \cdot  p_m \rceil$. Powtórz $R$ razy następujące kroki:
+ \item Wylosuj dwa różne indeksy $i, j$ od 0 do $d-1$ zgodnie z rozkładem jednostajnym.
  \item Zamień liczbę na pozycji $i$-tej z liczbą na pozycji $j$-tej w mutancie.
 \end{enumerate}
 
 \subsection{Operator krzyżowania}
 
-Operator krzyżowania na wejściu otrzymuje dwa rozwiązania rodzicielskie długości $n$ i zwraca dwa rozwiązania potomne długości $n$. 
-Jako operator krzyżowania zostanie wykorzystany operator krzyżowania z częściowym odwzorowaniem -- {PMX} (ang. partially mapped crossover).
+Operator krzyżowania na wejściu otrzymuje dwa rozwiązania rodzicielskie długości $d$ i zwraca dwa rozwiązania potomne długości $d$. 
+Jako operator krzyżowania zostanie wykorzystany operator krzyżowania z częściowym odwzorowaniem -- PMX
+(ang. partially mapped crossover).
 \begin{enumerate}
- \item Wylosuj dwa różne indeksy $i, j$ od 0 do $n-1$ zgodnie z rozkładem jednostajnym.
+ \item Wylosuj dwa różne indeksy $i, j$ od 0 do $d-1$ zgodnie z rozkładem jednostajnym.
  \item Utwórz dwa rozwiązania potomne poprzez skopiowanie rozwiązań rodzicielskich, a następnie dokonaj wymiany rozwiązania dla sekwencji od $i$ do $j$.
  \item Na podstawie skopiowanej sekwencji od $i$ do $j$ utwórz wzajemne odwzorowanie rozwiązań rodzicielskich.
- \item Dokonanie ewentualnej korekty pozostałych części rozwiązania (od $0$ do $i-1$ i od $j+1$ do $n-1$). Korekta jest konieczna w przypadku, gdy w rozwiązaniu potomnym co najmniej jeden z wierzchołków jest powtórzony. Proces korekty przebiega następująco:
+ \item Dokonaj ewentualnej korekty pozostałych części rozwiązania (od $0$ do $i-1$ oraz od $j+1$ do $d-1$). 
+Korekta jest konieczna, gdy w rozwiązaniu potomnym co najmniej jeden z wierzchołków jest powtórzony.
+Proces korekty przebiega następująco:
  \begin{enumerate}
  	\item Zidentyfikuj powtórzone wierzchołki w rozwiązaniu potomnym.
- 	\item Dla każdego powtórzone wierzchołka w części rozwiązania od $0$ do $i-1$ i od $j+1$ do $n-1$ dokonaj zamiany z wierzchołkiem zgodnym z odwzorowaniem uzyskanym w poprzednim punkcie.
+ 	\item Dla każdego powtórzonego wierzchołka w części rozwiązania od $0$ do $i-1$ oraz od $j+1$ do $d-1$ 
+dokonaj zamiany z wierzchołkiem zgodnym z odwzorowaniem uzyskanym wcześniej.
  \end{enumerate}
 \end{enumerate}
 
-Przykład. \\
+Przykład: \\
 
 Wejściowe rozwiązania rodzicielskie: \\
 
@@ -151,7 +157,7 @@ Wyjściem jest jedna populacja o rozmiarze $n$.
 \begin{algorithm}[!htb]
 \begin{algorithmic}[1]
 \Function{sukcesja}{}
-  \For{$i = 0$ \bf{to} $i = NP - 1$}
+  \For{$i = 0$ \bf{to} $i = n - 1$}
     \If{$f(O(t, i)) < f(P(t, i)) $}
       \State $P(t+1, i) \gets O(t, i)$
     \Else
