@@ -32,7 +32,7 @@ public class EA
 				if (rand.nextDouble() < CROSSOVER_PROBABILITY)
 				{
 					final Solution b = select(children);
-					children.solutions[i] = mutate(a.crossover(b));
+					children.solutions[i] = mutate(crossover(a, b));
 				}
 				else
 				{
@@ -54,6 +54,10 @@ public class EA
 	private Solution select(Population pop)
 	{
 		return pop.solutions[rand.nextInt(N)];
+	}
+	
+	private Solution crossover(Solution parent1, Solution parent2) {
+		return Crossover.generateOffSpring(parent1, parent2);
 	}
 
 	private void succesion(Population actual, Population children)

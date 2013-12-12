@@ -21,12 +21,6 @@ public class Solution
 		System.arraycopy(other.cities, 0, cities, 0, cities.length);
 	}
 
-	public Solution crossover(Solution other)
-	{
-		// TODO
-		return null;
-	}
-
 	@Override
 	public String toString()
 	{
