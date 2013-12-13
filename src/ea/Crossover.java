@@ -1,62 +1,73 @@
 package ea;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+
+import testing.Main;
 
 public class Crossover
 {
-
-	public static Solution generateOffSpring(Solution parent1, Solution parent2)
+	public static Solution crossover(Solution parent1, Solution parent2)
 	{
-		Solution offspring1 = new Solution(parent1);
-		Solution offspring2 = new Solution(parent2);
+		final Solution children1 = new Solution(parent1);
+		final Solution children2 = new Solution(parent2);
+		
+		System.err.println(children1);
+		System.err.println(children2);
 
-		Random rand = new Random();
-		int crossoverPoint1 = rand.nextInt(parent1.cities.length);
-		int crossoverPoint2 = rand.nextInt(parent2.cities.length);
-
-		int start = Math.min(crossoverPoint1, crossoverPoint1);
-		int length = Math.abs(crossoverPoint1 - crossoverPoint2) + 1;
-
-		Map<Integer, Integer> offspring1Mapping = new HashMap<Integer, Integer>();
-		Map<Integer, Integer> offspring2Mapping = new HashMap<Integer, Integer>();
-
-		for (int i = 0; i < length; i++)
+		int i = Main.rand.nextInt(parent1.cities.length);
+		int j = Main.rand.nextInt(parent2.cities.length);
+		if (i > j)
 		{
+			final int temp = i;
+			i = j;
+			j = temp;
+		}
+		
+		System.err.println(i);
+		System.err.println(j);
 
-			int index = i + start;
-			int city1 = parent1.cities[index];
-			int city2 = parent2.cities[index];
+		final int length = j - i + 1;
+
+		final Map<Integer, Integer> children1Map = new HashMap<Integer, Integer>(length);
+		final Map<Integer, Integer> children2Map = new HashMap<Integer, Integer>(length);
+
+		for (int k = i; k < i + length; k++)
+		{
+			final int city1 = parent1.cities[k];
+			final int city2 = parent2.cities[k];
 
 			// swap solutions between two crossover points
-			offspring1.cities[index] = city2;
-			offspring2.cities[index] = city1;
+			children1.cities[k] = city2;
+			children2.cities[k] = city1;
 
 			// create mapping
-			offspring1Mapping.put(city1, city2);
-			offspring2Mapping.put(city2, city1);
+			children1Map.put(city1, city2);
+			children2Map.put(city2, city1);
 		}
+		
+		System.err.println(children1);
+		System.err.println(children2);
+		
+		System.err.println(children1Map);
+		System.err.println(children2Map);
 
-		normalizeOffspring(start, offspring1, offspring2Mapping);
-		normalizeOffspring(start, offspring2, offspring1Mapping);
-
-		// return random offspring
-		return Arrays.asList(offspring1, offspring2).get(rand.nextInt(2));
+		repairChildren(i, children1, children2Map);
+		repairChildren(i, children2, children1Map);
+		
+		return children1;
 	}
 
-	private static void normalizeOffspring(int start, Solution offspring,
-			Map<Integer, Integer> mapping)
+	private static void repairChildren(int start, Solution children, Map<Integer, Integer> map)
 	{
-		for (int i = 0; i < offspring.cities.length; i++)
+		for (int i = 0; i < children.cities.length; i++)
 		{
-			if (i < start || i >= start + mapping.size())
+			if (i < start || i >= start + map.size())
 			{
-				int city = offspring.cities[i];
-				if (mapping.containsKey(city))
+				final int city = children.cities[i];
+				if (map.containsKey(city))
 				{
-					offspring.cities[i] = mapping.get(city);
+					children.cities[i] = map.get(city);
 				}
 			}
 		}

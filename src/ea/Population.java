@@ -1,19 +1,18 @@
 package ea;
 
 import java.util.Arrays;
-import java.util.Random;
 
 public class Population
 {
 	public final Solution[] solutions;
 
 	/** Create random population. */
-	public Population(int n, int d, Random rand)
+	public Population(int n, int d)
 	{
 		solutions = new Solution[n];
 		for (int i = 0; i < n; i++)
 		{
-			solutions[i] = new Solution(d, rand);
+			solutions[i] = new Solution(d);
 		}
 	}
 
