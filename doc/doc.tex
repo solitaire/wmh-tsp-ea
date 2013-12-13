@@ -144,6 +144,10 @@ Wyjściem jest jedna populacja o rozmiarze $n$.
 \end{algorithm}
 
 \subsection{Struktury danych}
+	\paragraph{Rozwiązanie}
+		Rozwiązanie jest reprezentowane jako tablica $D$ liczb całkowitych, której elementy są numerami miast.
+	\paragraph{Populacja}
+		Populacja jest reprezentowana jako tablica rozwiązań. Rozmiar populacji jest stały i równy $10*D$.
 
 \subsection{Założenia programu}
 \begin{description}
@@ -184,7 +188,7 @@ $
 	\item[Wyjście] \hfill \\
 	Wyjściem algorytmu jest plik tekstowy zawierający koszt najtańszego cyklu znalezionego przez algorytm.
 	\item[Kryteria stopu] \hfill \\
-	Warunkiem zatrzymania algorytmu jest wykonanie N ewaluacji. Liczba ewaluacji algorytmu ewolucyjnego jest określona następująco: $N = 100000 * D$, gdzie $D$ to rozmiar problemu (liczba miast).
+	Warunkiem zatrzymania algorytmu jest wykonanie $E$ ewaluacji. Liczba ewaluacji algorytmu ewolucyjnego jest określona następująco: $E = 100000 * D$, gdzie $D$ to rozmiar problemu (liczba miast).
 	\item[Parametry] \hfill \\
 	Na wejście programu możliwe jest podanie dwóch parametrów określających odpowiednio:
 		\begin{itemize}
@@ -192,6 +196,8 @@ $
 			\item prawdopodobieństwo krzyżowania (domyślna wartość 0,1)
 		\end{itemize}
 		W przypadku, gdy parametry te nie zostaną sprecyzowane, stosowane są wartości domyślne.
+	\item[Złożoność] \hfill \\
+	Złożoność operatorów genetycznych: mutacji oraz krzyżowania jest równa $O(n)$, gdzie $n = D$ to rozmiar rozwiązania (liczba miast).
 	\item[Sytuacje awaryjne] \hfill \\
 Problemami, które mogą wystąpić podczas działania aplikacji są:
 	\begin{itemize}
