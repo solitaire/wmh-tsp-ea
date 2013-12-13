@@ -6,7 +6,19 @@ then
 	return
 fi
 
-ansfile="${1%.*}.ans"
+pm=0.5
+if [ $# -gt 1 ]
+then
+	pm=$2
+fi
 
-java -cp bin testing/Main $2 $3 < $1 > $ansfile
-echo $ansfile
+pc=0.5
+if [ $# -gt 2 ]
+then
+	pc=$3
+fi
+
+ansfile="${1%.*}_$pm"_"$pc.ans"
+
+java -cp bin testing/Main $pm $pc < $1 > $ansfile
+echo $ansfile `date`
