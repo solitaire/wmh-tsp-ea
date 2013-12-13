@@ -79,20 +79,12 @@ Zwraca rozwiązanie długości $d$, nazywane mutantem.
 \subsubsection{Krzyżowanie}
 
 Operator krzyżowania na wejściu otrzymuje dwa rozwiązania rodzicielskie długości $d$ i zwraca dwa rozwiązania potomne długości $d$. 
-Jako operator krzyżowania zostanie wykorzystany operator krzyżowania z częściowym odwzorowaniem -- PMX
-(ang. partially mapped crossover).
+Jako operator krzyżowania zostanie wykorzystany operator krzyżowania Order1.
 \begin{enumerate}
  \item Wylosuj dwa różne indeksy $i, j$ od 0 do $d-1$ zgodnie z rozkładem jednostajnym.
- \item Utwórz dwa rozwiązania potomne poprzez skopiowanie rozwiązań rodzicielskich, a następnie dokonaj wymiany rozwiązania dla sekwencji od $i$ do $j$.
- \item Na podstawie skopiowanej sekwencji od $i$ do $j$ utwórz wzajemne odwzorowanie rozwiązań rodzicielskich.
- \item Dokonaj ewentualnej korekty pozostałych części rozwiązania (od $0$ do $i-1$ oraz od $j+1$ do $d-1$). 
-Korekta jest konieczna, gdy w rozwiązaniu potomnym co najmniej jeden z wierzchołków jest powtórzony.
-Proces korekty przebiega następująco:
- \begin{enumerate}
- 	\item Zidentyfikuj powtórzone wierzchołki w rozwiązaniu potomnym.
- 	\item Dla każdego powtórzonego wierzchołka w części rozwiązania od $0$ do $i-1$ oraz od $j+1$ do $d-1$ 
-dokonaj zamiany z wierzchołkiem zgodnym z odwzorowaniem uzyskanym wcześniej.
- \end{enumerate}
+ \item Utwórz jedno puste rozwiązanie potomne o rozmiarze równym rozmiarowi rodzica.
+ \item Skopiuj sekwencję rozwiązania od $i$ do $j$ pierwszego z rodziców do potomka.
+ \item Począwszy od lewej strony, wypełnij kolejno pozostałą sekwencję rozwiązania potomnego rozwiązaniami drugiego z rodziców, których nie ma na jeszcze w rozwiązaniu potomnym.
 \end{enumerate}
 
 Przykład: \\
@@ -107,45 +99,23 @@ Rodzic 1
 Rodzic 2
 \begin{tabular}{ | c | c | c | c | c | c | c | c |}
   \hline
-  7 & 5 & \cellcolor{blue!25}6 & \cellcolor{blue!25}3 & \cellcolor{blue!25}8 & \cellcolor{blue!25}2 & 1 & 4 \\ \hline
+  7 & 5 & 6 & 3 & 8 & 2 & 1 & 4 \\ \hline
 \end{tabular}
 
 \begin{enumerate}
  \item Wylosowano $i = 2$, $j = 5$.
 
- \item Wymiana sekwencji od $i$ do $j$. \\
-
-Potomek 1
-\begin{tabular}{ | c | c | c | c | c | c | c | c |}
-  \hline
-  2 & 6 & \cellcolor{blue!25}6 & \cellcolor{blue!25}3 & \cellcolor{blue!25}8 & \cellcolor{blue!25}2 & 8 & 3 \\ \hline
-\end{tabular}\\
-Potomek 2
-\begin{tabular}{ | c | c | c | c | c | c | c | c |}
-  \hline
-  7 & 5 &  \cellcolor{green!25}7 & \cellcolor{green!25}1 & \cellcolor{green!25}5 & \cellcolor{green!25}4 & 1 & 4 \\ \hline
-\end{tabular}\\
-
-\item Utworzenie odwzorowania. \\\\
-$6 - 7$\\
-$3 - 1$\\
-$5 - 8$\\
-$2 - 4$\\
-
-\item Korekta potomków. W potomku pierwszym: 2 się powtarza. Zgodnie z odwzorowaniem zostaje zamieniona na 4.
-6 się powtarza, zostaje zamieniona na 7. 8 się powtarza, zamiana na 5. 3 się powtarza, zamiana na 1. \\
-
-Potomek 1
-\begin{tabular}{ | c | c | c | c | c | c | c | c |}
-  \hline
-  4 & 7 & \cellcolor{blue!25}6 & \cellcolor{blue!25}3 & \cellcolor{blue!25}8 & \cellcolor{blue!25}2 & 5 & 1 \\ \hline
-\end{tabular}\\
-Potomek 2
-\begin{tabular}{ | c | c | c | c | c | c | c | c |}
-  \hline
-  6 & 8 &  \cellcolor{green!25}7 & \cellcolor{green!25}1 & \cellcolor{green!25}5 & \cellcolor{green!25}4 & 3 & 2 \\ \hline
-\end{tabular}\\
+ \item Skopiowanie sekwencji od $i$ do $j$. \\
 \end{enumerate}
+
+Potomek\\
+\begin{tabular}{ | c | c | c | c | c | c | c | c |}
+   &  &  \cellcolor{green!25}7 & \cellcolor{green!25}1 & \cellcolor{green!25}5 & \cellcolor{green!25}4 &  &  \\ \hline
+\end{tabular}\\
+
+\begin{tabular}{ | c | c | c | c | c | c | c | c |}
+  6 & 3 &  \cellcolor{green!25}7 & \cellcolor{green!25}1 & \cellcolor{green!25}5 & \cellcolor{green!25}4 & 8 & 2 \\ \hline
+\end{tabular}\\
 
 \subsubsection{Selekcja}
 
