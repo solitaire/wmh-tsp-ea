@@ -25,8 +25,7 @@ public class Main
 		{
 			final Evaluator evaluator = new Evaluator(graph, MAX_FUN_EVALS);
 			final EA ea = new EA(evaluator, graph.D);
-			// TODO: use System.out.println(ea.optimize());
-			System.out.println(6 + rand.nextDouble() * 10);
+			System.out.println(ea.optimize());
 		}
 	}
 }

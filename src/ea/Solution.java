@@ -15,7 +15,7 @@ public class Solution
 		cities = new Integer[d];
 		for (int i = 0; i < d; i++)
 		{
-			cities[i] = i + 1;
+			cities[i] = i;
 		}
 		Collections.shuffle(Arrays.asList(cities), Main.rand);
 	}

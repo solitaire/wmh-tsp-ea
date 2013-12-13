@@ -18,7 +18,7 @@ public class EA
 		this.evaluator = evaluator;
 	}
 
-	public Solution optimize()
+	public double optimize()
 	{
 		final Population actual = new Population(N, D);
 		final Population children = new Population(N, D);
@@ -40,7 +40,7 @@ public class EA
 			succesion(actual, children);
 		}
 		while (!evaluator.hasReachedMaxFunEvals());
-		return evaluator.getBestObservedSolution();
+		return evaluator.getBestObservedScore();
 	}
 
 	private Solution select(Population pop)

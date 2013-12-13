@@ -25,7 +25,7 @@ public class Evaluator
 			score += graph.weights[solution.cities[i]][solution.cities[i + 1]];
 		}
 		score += graph.weights[solution.cities[solution.cities.length - 1]][solution.cities[0]];
-		if (bestScore < score)
+		if (bestScore > score)
 		{
 			bestScore = score;
 			best = solution;
@@ -52,5 +52,10 @@ public class Evaluator
 	public Solution getBestObservedSolution()
 	{
 		return best;
+	}
+
+	public double getBestObservedScore()
+	{
+		return bestScore;
 	}
 }
