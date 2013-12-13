@@ -31,16 +31,10 @@ Program będzie wypisywał odpowiedź na standardowe wyjście.
 
 \subsection{Reprezentacja rozwiązań}
 
-Wierzchołki grafu numerujemy od 0 do $d - 1$. $d > 2$. Rozwiązanie reprezentujemy jako ciąg długości $d$, złożony z unikalnych liczb. 
-Dla skrócenia zapisu stosujemy zapis 123, zamiast $(1,2,3)$. 
-Przykładowo, w grafie pełnym o 3 wierzchołkach możliwych jest $3!$ rozwiązań: 123, 132, 213, 231, 312, 321.
-Warto zauważyć, że połowę tych rozwiązań można pominąć, ze względu na to, że koszt przejścia z $a$ do $b$ jest zawsze 
-taki sam jak z $b$ do $a$. Można zatem pominąć rozwiązania $231, 312, 321$. Pozostałe trzy rozwiązania mają identyczny koszt,
-zatem dwa z nich również można pominąć. Tym samym jedyne interesujące nas rozwiązanie to $123$.
-W ogólnym przypadku, dla grafu pełnego o $d$ wierzchołkach, liczba interesujących nas rozwiązań wynosi $\frac{(d-1)!}{2}$. 
-Spośród redundantnych rozwiązań pozostawiane będą te, których reprezentacja liczbowa jest najmniejsza. 
-Przykładowo, dla grafu pełnego o $4$ wierzchołkach zamiast rozpatrywać wszystkie
-24 rozwiązania, będziemy rozpatrywać tylko 3: 1234, 1324, 1342. 
+Wierzchołki grafu numerujemy od 0 do $d - 1$. Zakładamy, że $d \in \mathcal{N}$ oraz $d \geq 3$. 
+Rozwiązania reprezentujemy jako wektory złożone z $d$ unikalnych liczb. 
+Np. $[0,1,2]$ oznacza rozwiązanie złożone z 3 krawędzi: $(0,1), (1,2), (2,0)$. 
+W ogólnym przypadku, dla grafu pełnego o $d$ wierzchołkach, liczba unikalnych rozwiązań wynosi $\frac{(d-1)!}{2}$. 
 Minimalizowana wartość funkcji celu $f$ to suma wag krawędzi w cyklu dla danego rozwiązania.
 
 \subsection{Schemat algorytmu ewolucyjnego}
@@ -49,24 +43,26 @@ Minimalizowana wartość funkcji celu $f$ to suma wag krawędzi w cyklu dla dane
 \label{ea}
 \begin{algorithmic}[1]
 \Function{algorytm\_ewolucyjny}{}
-	\State $P(0) \gets \{x_1, x_2, \ldots, x_n\}$
-	\State $t \gets 0$
-	\While{$! stop$}
-    	\For{$i = 0$ \bf{to} $i = n - 1$}
-    		\If{$\mathcal{U}(0, 1) < p_c$}
-    			\State $O(t,i) \gets$ mutacja$($krzy{\.z}owanie$($selekcja$(P(t), 2)))$
-    		\Else
-    			\State $O(t,i) \gets$ mutacja$($selekcja$(P(t),1))$
-    		\EndIf
-    	\EndFor
+  \State $P(0) \gets \{x_1, x_2, \ldots, x_n\}$
+  \State $t \gets 0$
+  \While{$! stop$}
+    \For{$i = 0$ \bf{to} $i = n - 1$}
+      \State $a \gets$ selekcja$(P(t))$
+      \If{$\mathcal{U}(0, 1) < p_c$}
+	\State $b \gets$ selekcja$(P(t))$
+	\State $O(t,i) \gets$ mutacja$($krzy{\.z}owanie$(a, b))$
+      \Else
+	\State $O(t,i) \gets$ mutacja$(a)$
+      \EndIf
+    \EndFor
     \State $P(t+1) \gets$ sukcesja$(P(t),O(t))$
     \State $t \gets t+1$
-  	\EndWhile
+  \EndWhile
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Operator mutacji}
+\subsection{Mutacja}
 
 Operator mutacji otrzymuje na wejściu prawdopodobieństwo mutacji $p_m$ oraz rozwiązanie długości $d$.
 Zwraca rozwiązanie długości $d$, nazywane mutantem.
@@ -78,7 +74,7 @@ Zwraca rozwiązanie długości $d$, nazywane mutantem.
  \item Zamień liczbę na pozycji $i$-tej z liczbą na pozycji $j$-tej w mutancie.
 \end{enumerate}
 
-\subsection{Operator krzyżowania}
+\subsection{Krzyżowanie}
 
 Operator krzyżowania na wejściu otrzymuje dwa rozwiązania rodzicielskie długości $d$ i zwraca dwa rozwiązania potomne długości $d$. 
 Jako operator krzyżowania zostanie wykorzystany operator krzyżowania z częściowym odwzorowaniem -- PMX
@@ -149,7 +145,12 @@ Potomek 2
 \end{tabular}\\
 \end{enumerate}
 
-\subsection{Metoda sukcesji}
+\subsection{Selekcja}
+
+Operator selekcji otrzymuje na wejściu populację o rozmiarze $n$. Zwraca jedno losowe rozwiązanie z populacji wejściowej
+zgodnie z rokładem jednostajnym.
+
+\subsection{Sukcesja}
 
 Metoda sukcesji na wejściu otrzymuje dwie populacje o rozmiarze $n$: aktualną $P$ oraz populację mutantów $O$.
 Wyjściem jest jedna populacja o rozmiarze $n$.

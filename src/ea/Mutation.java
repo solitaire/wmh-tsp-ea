@@ -7,21 +7,21 @@ public class Mutation
 	public static Solution mutate(Solution solution)
 	{
 		final Solution mutant = new Solution(solution);
-		final int D = solution.cities.length;
-		for (int i = 0; i < D; i++)
+		final int d = solution.cities.length;
+		final int repeats = (int) Math.ceil(d * EA.MUTATION_PROBABILITY);
+		for (int r = 0; r < repeats; r++)
 		{
-			if (Main.rand.nextDouble() < EA.MUTATION_PROBABILITY)
+			final int i = Main.rand.nextInt(d);
+			int j = i;
+			do
 			{
-				final int index1 = Main.rand.nextInt(D);
-				int index2 = index1;
-				do
-				{
-					index2 = Main.rand.nextInt(D);
-				}
-				while (index1 != index2);
-				mutant.cities[index1] = solution.cities[index2];
-				mutant.cities[index2] = solution.cities[index1];
+				j = Main.rand.nextInt(d);
 			}
+			while (i != j);
+
+			final int city = mutant.cities[i];
+			mutant.cities[i] = solution.cities[j];
+			mutant.cities[j] = city;
 		}
 		return mutant;
 	}
