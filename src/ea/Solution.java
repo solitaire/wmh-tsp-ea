@@ -7,13 +7,13 @@ import testing.Main;
 
 public class Solution
 {
-	public final int cities[];
+	public final Integer cities[];
 
 	/** Create random solution. */
 	public Solution(int d)
 	{
-		cities = new int[d];
-		for (int i = 0; i < d; d++)
+		cities = new Integer[d];
+		for (int i = 0; i < d; i++)
 		{
 			cities[i] = i + 1;
 		}
@@ -23,11 +23,11 @@ public class Solution
 	/** Deep copy. */
 	public Solution(Solution other)
 	{
-		cities = new int[other.cities.length];
+		cities = new Integer[other.cities.length];
 		System.arraycopy(other.cities, 0, cities, 0, cities.length);
 	}
 
-	public Solution(int cities[])
+	public Solution(Integer cities[])
 	{
 		this.cities = cities;
 	}

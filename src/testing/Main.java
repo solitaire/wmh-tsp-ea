@@ -1,13 +1,11 @@
 package testing;
 
-import java.util.Locale;
-import java.util.Random;
-
-import ea.Crossover;
 import ea.EA;
 import ea.Evaluator;
-import ea.Solution;
 import graph.Graph;
+
+import java.util.Locale;
+import java.util.Random;
 
 public class Main
 {
@@ -30,15 +28,5 @@ public class Main
 			// TODO: use System.out.println(ea.optimize());
 			System.out.println(6 + rand.nextDouble() * 10);
 		}
-		testCrossover();
-	}
-
-	public static void testCrossover()
-	{
-		Solution parent1 = new Solution(new int[]
-		{ 2, 6, 7, 1, 5, 4, 8, 3 });
-		Solution parent2 = new Solution(new int[]
-		{ 7, 5, 6, 3, 8, 2, 1, 4 });
-		System.err.println(Crossover.crossover(parent1, parent2));
 	}
 }
