@@ -4,18 +4,20 @@ import testing.Main;
 
 public class EA
 {
-	public static final double CROSSOVER_PROBABILITY = 0.9;
-	public static final double MUTATION_PROBABILITY = 0.5;
-	public static final int N_TO_D_RATIO = 10;
+	public final int N_TO_D_RATIO = 10;
 	public final int D;
 	public final int N;
+	private final double crossoverProbability;
+	private final Mutation mutation;
 	private final Evaluator evaluator;
 
-	public EA(Evaluator evaluator, int d)
+	public EA(Evaluator evaluator, int d, double mutationProbability, double crossoverProbabilty)
 	{
 		D = d;
 		N = N_TO_D_RATIO * d;
 		this.evaluator = evaluator;
+		this.mutation = new Mutation(mutationProbability);
+		this.crossoverProbability = crossoverProbabilty;
 	}
 
 	public double optimize()
@@ -27,14 +29,14 @@ public class EA
 			for (int i = 0; i < N; i++)
 			{
 				final Solution a = select(children);
-				if (Main.rand.nextDouble() < CROSSOVER_PROBABILITY)
+				if (Main.rand.nextDouble() < crossoverProbability)
 				{
 					final Solution b = select(children);
-					children.solutions[i] = Mutation.mutate(Crossover.crossover(a, b));
+					children.solutions[i] = mutation.mutate(Crossover.crossover(a, b));
 				}
 				else
 				{
-					children.solutions[i] = Mutation.mutate(a);
+					children.solutions[i] = mutation.mutate(a);
 				}
 			}
 			succesion(actual, children);
