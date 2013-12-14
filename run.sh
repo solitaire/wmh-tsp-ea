@@ -6,13 +6,13 @@ then
 	return
 fi
 
-pm=0.5
+pm=0.1
 if [ $# -gt 1 ]
 then
 	pm=$2
 fi
 
-pc=0.5
+pc=0.9
 if [ $# -gt 2 ]
 then
 	pc=$3
