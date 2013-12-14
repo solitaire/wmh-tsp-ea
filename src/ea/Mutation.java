@@ -24,7 +24,7 @@ public class Mutation
 			{
 				j = Main.rand.nextInt(d);
 			}
-			while (i != j);
+			while (i == j);
 
 			final int city = mutant.cities[i];
 			mutant.cities[i] = solution.cities[j];

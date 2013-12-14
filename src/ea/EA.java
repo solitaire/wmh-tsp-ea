@@ -7,9 +7,9 @@ public class EA
 	public final int N_TO_D_RATIO = 10;
 	public final int D;
 	public final int N;
-	private final double crossoverProbability;
-	private final Mutation mutation;
 	private final Evaluator evaluator;
+	private final Mutation mutation;
+	private final double crossoverProbability;
 
 	public EA(Evaluator evaluator, int d, double mutationProbability, double crossoverProbabilty)
 	{
