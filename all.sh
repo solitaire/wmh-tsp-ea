@@ -7,12 +7,12 @@ run() {
 	done
 }
 
-for pm in 0.5 0.9 1.0
+for pm in 0.1 0.5 0.9 1.0
 do
-	run $pm 0.9
+	run $pm 0.0
 done
 
 for pc in 0.1 0.5 0.9 1.0
 do
-	run 0.1 $pc
+	run 0.0 $pc
 done
