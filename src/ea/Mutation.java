@@ -27,7 +27,7 @@ public class Mutation
 			while (i == j);
 
 			final int city = mutant.cities[i];
-			mutant.cities[i] = solution.cities[j];
+			mutant.cities[i] = mutant.cities[j];
 			mutant.cities[j] = city;
 		}
 		return mutant;
