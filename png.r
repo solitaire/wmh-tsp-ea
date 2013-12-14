@@ -38,13 +38,15 @@ for (i in 1:7)
 	data[[i]] = data[[i]] - optimum
 }
 
+xmin = .Machine$integer.max
 xmax = 0
 for (i in 1:7)
 {
-	xmax = max(xmax, max(data[[i]]))
+	xmin = min(xmin, min(data[[i]]))
+	xmax = max(xmax, max(data[[i]]))	
 }
 
-plot(ecdf(data[[1]]), verticals = TRUE, do.points = FALSE, col = colors[1], main = n, xlab="najlepszy - optimum", ylab="Prawdopodobieństwo", xlim=c(0, xmax), ylim=c(0,1))
+plot(ecdf(data[[1]]), verticals = TRUE, do.points = FALSE, col = colors[1], main = n, xlab="najlepszy - optimum", ylab="Prawdopodobieństwo", xlim=c(xmin, xmax), ylim=c(0,1))
 for (i in 2:7)
 {
 	lines(ecdf(data[[i]]), verticals = TRUE, do.points = FALSE, col = colors[i])
