@@ -178,11 +178,11 @@ q_{0,n-1} & q_{1,n-1} & \ldots & q_{n-1,n-1}
 $
 \bigskip
 
-$q_{i,j}$ równe 0.0 oznacza, że wierzchołki i oraz j nie są połączone krawędzią. W~przeciwnym razie, wierzchołki są połączone.
-
-Macierz jest dana w pliku tekstowym, w którym kolejne $q_{i,j}$ w wierszu $j$ są
-oddzielone co najmniej jednym znakiem białym. Przez znak biały rozumiemy
-spację lub tabulator. $q_{i,j}$ różne od 0 będą traktowane jak 1. Pierwszy wiersz pliku zawiera wymiar macierzy.
+$q_{i,j}$ oznacza wagę krawędzi pomiędzy wierzchołkami $i$ i $j$.
+\par\vspace{\baselineskip}
+Macierz jest dana w pliku tekstowym, w którym kolejne $q_{i,j}$ w wierszu $j$ są oddzielone co najmniej jednym znakiem białym. Przez znak biały rozumiemy
+spację lub tabulator. Pierwszy wiersz pliku zawiera wymiar macierzy.
+>>>>>>> Stashed changes
 
 Poniżej przedstawiono przykładowy, poprawny plik wejściowy:
 
@@ -258,11 +258,37 @@ Dla ustalonej wartości $p_m = 0,1$ - zbadanie wpływu zmian $p_c$:
 \end{center}
 
 \bigskip
-Pojedynczy przypadek testowy polega na uruchomieniu algorytmu ewolucyjnego dla określonego problemu i zadanych wartości 
-prawdopodobieństwa mutacji $p_m$ i prawdopodobieństwa krzyżowania $p_c$.
-Każdy przypadek testowy uruchomiony będzie niezależnie 15 razy. Poszczególne przypadki testowe będą uruchamiane dla ustalonej 
-wartości ziarna generatora liczb pseudolosowych -- w ten sposób sekwencje liczb pseudolosowych dla każdej wersji 
-algorytmu będą jednakowe, co umożliwi porównanie ich skuteczności.
+
+Dla wyłączonej mutacji $(p_m) = 0$ - zbadanie wpływu zmian $(p_c)$
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\multicolumn{4}{|c|}{$(p_c)$, $(p_m)$} \\
+\hline
+(0,1; 0) & (0,5; 0) & (0,9; 0) & (1; 0)\\
+\hline
+\end{tabular}
+\end{center}
+
+\bigskip
+
+Dla wyłączonego krzyżowania $(p_c) = 0$ - zbadanie wpływu zmian $(p_m)$
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\multicolumn{4}{|c|}{$(p_c)$, $(p_m)$} \\
+\hline
+(0; 0,1) & (0; 0,5) & (0; 0,9) & (0; 1)\\
+\hline
+\end{tabular}
+\end{center}
+
+\bigskip
+Pojedynczy przypadek testowy polega na uruchomieniu algorytmu ewolucyjnego dla określonego problemu i zadanych wartości prawdopodobieństwa mutacji $(p_m)$ i prawdopodobieństwa krzyżowania $(p_c)$. Każdy przypadek testowy uruchomiony będzie niezależnie $RUNS = 15$ razy.
+
+Poszczególne przypadki testowe będą uruchamiane dla ustalonej wartości ziarna generatora liczb pseudolosowych -- w ten sposób sekwencje liczb pseudolosowych dla każdej wersji algorytmu będą jednakowe, co umożliwi porównanie ich skuteczności.
+
+Do testowania zaimplementowanego algorytmu ewolucyjnego wykorzystane zostaną zestawy danych, dla których z~góry znany jest koszt optymalnego cyklu. W~celu porównania skuteczności poszczególnych ustawień algorytmu, dla każdego z~przypadków testowych zostaną wykreślone dystrybuanty empiryczne -- miarą jakości algorytmu będzie różnica pomiędzy optymalnym kosztem cyklu a~kosztem obliczonym przez algorytm.
  
 \nocite{*}
 \bibliographystyle{plain}
