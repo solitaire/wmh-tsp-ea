@@ -156,9 +156,9 @@ Wyjściem jest jedna populacja o rozmiarze $n$.
 
 \subsection{Struktury danych}
 	\paragraph{Rozwiązanie}
-		Rozwiązanie jest reprezentowane jako tablica $D$ liczb całkowitych, której elementy są numerami miast.
+		Rozwiązanie jest reprezentowane jako tablica $d$ liczb całkowitych, której elementy są numerami miast.
 	\paragraph{Populacja}
-		Populacja jest reprezentowana jako tablica rozwiązań. Rozmiar populacji jest stały i równy $10D$.
+		Populacja jest reprezentowana jako tablica rozwiązań. Rozmiar populacji jest stały i równy $n = 10d$.
 
 \subsection{Założenia programu}
 \begin{description}
@@ -199,7 +199,7 @@ $
 	\item[Wyjście] \hfill \\
 	Wyjściem algorytmu jest plik tekstowy zawierający koszt najtańszego cyklu znalezionego przez algorytm.
 	\item[Kryteria stopu] \hfill \\
-	Warunkiem zatrzymania algorytmu jest wywołanie $10^5D$ razy funkcji oceny, gdzie $D$ to rozmiar problemu (liczba miast).
+	Warunkiem zatrzymania algorytmu jest wywołanie $10^5d$ razy funkcji oceny, gdzie $d$ to rozmiar problemu (liczba miast).
 	\item[Parametry] \hfill \\
 	Na wejście programu możliwe jest podanie dwóch parametrów określających odpowiednio:
 		\begin{itemize}
@@ -207,8 +207,10 @@ $
 			\item prawdopodobieństwo krzyżowania $p_c$ (domyślna wartość 0,1)
 		\end{itemize}
 		W przypadku, gdy parametry te nie zostaną sprecyzowane, stosowane są wartości domyślne.
-	\item[Złożoność] \hfill \\
-	Złożoność operatorów genetycznych: mutacji oraz krzyżowania jest równa $O(D)$, gdzie $D$ to rozmiar rozwiązania (liczba miast).
+	\item[Złożoność obliczeniowa] \hfill \\
+	Złożoność obliczeniowa operatorów genetycznych: mutacji oraz krzyżowania jest równa $O(d)$, 
+gdzie $d$ to rozmiar rozwiązania (liczba miast). Złożoność obliczeniowa selekcji wynosi $O(1)$. Złożoność obliczeniowa
+sukcesji jest liniowa względem liczby rozwiązań w populacji $n$, czyli $O(n)$. 
 	\item[Sytuacje awaryjne] \hfill \\
 Problemami, które mogą wystąpić podczas działania aplikacji są:
 	\begin{itemize}
