@@ -3,7 +3,7 @@
 run() {
 	for file in tests/*in
 	do
-		./run.sh $file $1 $2
+		./run.sh $file $1 $2 $3
 	done
 }
 

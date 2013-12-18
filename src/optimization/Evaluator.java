@@ -58,11 +58,4 @@ public class Evaluator
 	{
 		return bestScore;
 	}
-
-	public void reset()
-	{
-		funEvals = 0;
-		best = null;
-		bestScore = Double.MAX_VALUE;
-	}
 }

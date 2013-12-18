@@ -1,29 +1,50 @@
 package optimization.ea;
 
+import graph.Graph;
 import optimization.Evaluator;
 import optimization.Optimizer;
 import optimization.Solution;
+import optimization.greedy.Greedy;
 import testing.Main;
 
 public class EA extends Optimizer
 {
-	public final int N_TO_D_RATIO = 10;
-	public final int N;
+	private final int N;
+	private final int N_TO_D_RATIO = 10;
+	private final int FUN_EVALS_TO_D_RATIO = 100000;
 	private final Mutation mutation;
 	private final double crossoverProbability;
+	private final boolean greedyStart;
 
-	public EA(Evaluator evaluator, int d, double mutationProbability, double crossoverProbabilty)
+	public EA(Graph graph, double mutationProbability, double crossoverProbability)
 	{
-		super(evaluator, d);
-		N = N_TO_D_RATIO * d;
+		this(graph, mutationProbability, crossoverProbability, false);
+	}
+
+	public EA(Graph graph, double mutationProbability, double crossoverProbability, boolean greedyStart)
+	{
+		super(graph);
+		N = N_TO_D_RATIO * D;
 		this.mutation = new Mutation(mutationProbability);
-		this.crossoverProbability = crossoverProbabilty;
+		this.crossoverProbability = crossoverProbability;
+		this.greedyStart = greedyStart;
 	}
 
 	public double optimize()
 	{
-		final Population actual = new Population(N, D);
+		Population actual;
+		if (greedyStart)
+		{
+			final Greedy greedy = new Greedy(graph);
+			actual = new Population(N, greedy);
+		}
+		else
+		{
+			actual = new Population(N, D);
+		}
 		final Population children = new Population(N, D);
+		final int MAX_FUN_EVALS = FUN_EVALS_TO_D_RATIO * graph.D;
+		final Evaluator evaluator = new Evaluator(graph, MAX_FUN_EVALS);
 		do
 		{
 			for (int i = 0; i < N; i++)
@@ -39,7 +60,7 @@ public class EA extends Optimizer
 					children.solutions[i] = mutation.mutate(a);
 				}
 			}
-			succesion(actual, children);
+			succesion(actual, children, evaluator);
 		}
 		while (!evaluator.hasReachedMaxFunEvals());
 		return evaluator.getBestObservedScore();
@@ -50,7 +71,7 @@ public class EA extends Optimizer
 		return pop.solutions[Main.rand.nextInt(N)];
 	}
 
-	private void succesion(Population actual, Population children)
+	private void succesion(Population actual, Population children, Evaluator evaluator)
 	{
 		for (int i = 0; i < N; i++)
 		{

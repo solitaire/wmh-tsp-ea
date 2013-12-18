@@ -8,7 +8,7 @@ fi
 
 if [ $# -lt 1 ]
 then
-	echo "Usage: $0 TEST_FILE.in [MUTATION_PROBABILITY] [CROSSOVER_PROBABILITY]"
+	echo "Usage: $0 TEST_FILE.in [MUTATION_PROBABILITY] [CROSSOVER_PROBABILITY] [greedystart]"
 	return
 fi
 
@@ -24,7 +24,13 @@ then
 	pc=$3
 fi
 
-ansfile="${1%.*}_$pm"_"$pc.ans"
+g=""
+if [ $# -gt 3 ]
+then
+	g="g"
+fi
 
-java -cp bin testing/Main $pm $pc < $1 > $ansfile
+ansfile="${1%.*}_$pm"_"$pc$g.ans"
+
+java -cp bin testing/Main $pm $pc $4 < $1 > $ansfile
 echo $ansfile `date`

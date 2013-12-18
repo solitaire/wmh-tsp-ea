@@ -1,15 +1,16 @@
 package optimization;
 
+import graph.Graph;
+
 public abstract class Optimizer
 {
 	public final int D;
+	protected final Graph graph;
 
-	protected final Evaluator evaluator;
-
-	public Optimizer(Evaluator evaluator, int d)
+	public Optimizer(Graph graph)
 	{
-		D = d;
-		this.evaluator = evaluator;
+		this.D = graph.D;
+		this.graph = graph;
 	}
 
 	abstract public double optimize();
