@@ -1,21 +1,21 @@
-package ea;
+package optimization.ea;
 
+import optimization.Evaluator;
+import optimization.Optimizer;
+import optimization.Solution;
 import testing.Main;
 
-public class EA
+public class EA extends Optimizer
 {
 	public final int N_TO_D_RATIO = 10;
-	public final int D;
 	public final int N;
-	private final Evaluator evaluator;
 	private final Mutation mutation;
 	private final double crossoverProbability;
 
 	public EA(Evaluator evaluator, int d, double mutationProbability, double crossoverProbabilty)
 	{
-		D = d;
+		super(evaluator, d);
 		N = N_TO_D_RATIO * d;
-		this.evaluator = evaluator;
 		this.mutation = new Mutation(mutationProbability);
 		this.crossoverProbability = crossoverProbabilty;
 	}

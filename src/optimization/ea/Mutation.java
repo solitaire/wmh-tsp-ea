@@ -1,5 +1,6 @@
-package ea;
+package optimization.ea;
 
+import optimization.Solution;
 import testing.Main;
 
 public class Mutation

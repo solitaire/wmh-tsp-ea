@@ -1,11 +1,14 @@
 package testing;
 
-import ea.EA;
-import ea.Evaluator;
 import graph.Graph;
 
 import java.util.Locale;
 import java.util.Random;
+
+import optimization.Evaluator;
+import optimization.Optimizer;
+import optimization.ea.EA;
+import optimization.greedy.Greedy;
 
 public class Main
 {
@@ -19,25 +22,34 @@ public class Main
 
 	public static void main(String[] args)
 	{
+		// Sets default locale to always have 1.23 not 1,23
+		Locale.setDefault(Locale.US);
+		final Graph graph = new Graph(System.in);
+		final int MAX_FUN_EVALS = FUN_EVALS_TO_D_RATIO * graph.D;
+		final Evaluator evaluator = new Evaluator(graph, MAX_FUN_EVALS);
+
 		double mutationProbability = DEFAULT_MUTATION_PROBABILITY;
 		double crossoverProbability = DEFAULT_CROSSOVER_PROBABILITY;
+		Optimizer optimizer = new EA(evaluator, graph.D, mutationProbability, crossoverProbability);
 		if (args.length >= 1)
 		{
-			mutationProbability = Double.parseDouble(args[0]);
+			if (args[0].equals("greedy"))
+			{
+				optimizer = new Greedy(evaluator, graph);
+			}
+			else
+			{
+				mutationProbability = Double.parseDouble(args[0]);
+			}
 		}
 		if (args.length >= 2)
 		{
 			crossoverProbability = Double.parseDouble(args[1]);
 		}
-		// Sets default locale to always have 1.23 not 1,23
-		Locale.setDefault(Locale.US);
-		final Graph graph = new Graph(System.in);
-		final int MAX_FUN_EVALS = FUN_EVALS_TO_D_RATIO * graph.D;
+
 		for (int i = 0; i < RUNS; i++)
 		{
-			final Evaluator evaluator = new Evaluator(graph, MAX_FUN_EVALS);
-			final EA ea = new EA(evaluator, graph.D, mutationProbability, crossoverProbability);
-			System.out.println(ea.optimize());
+			System.out.println(optimizer.optimize());
 		}
 	}
 }

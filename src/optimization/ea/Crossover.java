@@ -1,4 +1,4 @@
-package ea;
+package optimization.ea;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import optimization.Solution;
 import testing.Main;
 
 public class Crossover

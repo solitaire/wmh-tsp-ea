@@ -1,6 +1,8 @@
-package ea;
+package optimization.ea;
 
 import java.util.Arrays;
+
+import optimization.Solution;
 
 public class Population
 {

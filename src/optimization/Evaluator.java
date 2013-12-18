@@ -1,4 +1,4 @@
-package ea;
+package optimization;
 
 import graph.Graph;
 
@@ -57,5 +57,10 @@ public class Evaluator
 	public double getBestObservedScore()
 	{
 		return bestScore;
+	}
+
+	public void resetFunEvals()
+	{
+		funEvals = 0;
 	}
 }
