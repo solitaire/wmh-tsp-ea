@@ -7,6 +7,8 @@
 \usepackage{algpseudocode}
 \usepackage{geometry}
 \usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{subfigure}
 \title{\textbf{Zastosowanie algorytmu ewolucyjnego do rozwiązywania problemu komiwojażera}}
 \author{Anna Stępień \\ Adam Stelmaszczyk}
 \date{\today}
@@ -289,6 +291,88 @@ Pojedynczy przypadek testowy polega na uruchomieniu algorytmu ewolucyjnego dla o
 Poszczególne przypadki testowe będą uruchamiane dla ustalonej wartości ziarna generatora liczb pseudolosowych -- w ten sposób sekwencje liczb pseudolosowych dla każdej wersji algorytmu będą jednakowe, co umożliwi porównanie ich skuteczności.
 
 Do testowania zaimplementowanego algorytmu ewolucyjnego wykorzystane zostaną zestawy danych, dla których z~góry znany jest koszt optymalnego cyklu. W~celu porównania skuteczności poszczególnych ustawień algorytmu, dla każdego z~przypadków testowych zostaną wykreślone dystrybuanty empiryczne -- miarą jakości algorytmu będzie różnica pomiędzy optymalnym kosztem cyklu a~kosztem obliczonym przez algorytm.
+
+\section{Wyniki testów}
+\subsection{Wpływ prawdopodobieństwa mutacji}
+\begin{figure}[H]
+\centering
+\mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/normal/17.png} }\quad
+\subfigure[$p_c = 0$ - wyłączone krzyżowanie]{\includegraphics[width=.5\textwidth]{../tests/normal/17m.png} } 
+}
+\caption{Wpływ mutacji na działanie algorytmu - 17 miast}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/normal/26.png} }\quad
+\subfigure[$p_c = 0$ - wyłączone krzyżowanie]{\includegraphics[width=.5\textwidth]{../tests/normal/26m.png} } 
+}
+\caption{Wpływ mutacji na działanie algorytmu - 26 miast}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/normal/42.png} }\quad
+\subfigure[$p_c = 0$ - wyłączone krzyżowanie]{\includegraphics[width=.5\textwidth]{../tests/normal/42m.png} } 
+}
+\caption{Wpływ mutacji na działanie algorytmu - 42 miasta}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/normal/48.png} }\quad
+\subfigure[$p_c = 0$ - wyłączone krzyżowanie]{\includegraphics[width=.5\textwidth]{../tests/normal/48m.png} } 
+}
+\caption{Wpływ mutacji na działanie algorytmu - 48 miast}
+\end{figure}
+
+\subsection{Wpływ prawdopodobieństwa krzyżowania}
+\begin{figure}[H]
+\centering
+\mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/normal/17.png} }\quad
+\subfigure[$p_m = 0$ - wyłączona mutacja]{\includegraphics[width=.5\textwidth]{../tests/normal/17c.png} } 
+}
+\caption{Wpływ krzyżowania na działanie algorytmu - 17 miast}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/normal/26.png} }\quad
+\subfigure[$p_m = 0$ - wyłączona mutacja]{\includegraphics[width=.5\textwidth]{../tests/normal/26c.png} } 
+}
+\caption{Wpływ krzyżowania na działanie algorytmu - 26 miast}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/normal/42.png} }\quad
+\subfigure[$p_m = 0$ - wyłączona mutacja]{\includegraphics[width=.5\textwidth]{../tests/normal/42c.png} } 
+}
+\caption{Wpływ krzyżowania na działanie algorytmu - 42 miasta}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/normal/48.png} }\quad
+\subfigure[$p_m = 0$ - wyłączona mutacja]{\includegraphics[width=.5\textwidth]{../tests/normal/48c.png} } 
+}
+\caption{Wpływ krzyżowania na działanie algorytmu - 48 miast}
+\end{figure}
+
+\subsection{Porównanie z algorytmem zachłannym}
+	\subsubsection{Algorytm zachłanny}
+	\subsubsection{Populacja algorytmu ewolucyjnego inicjowana wynikiem działania algorytmu zachłannego}
+\begin{figure}[H]
+\centering
+\mbox{\subfigure[17 miast]{\includegraphics[width=.5\textwidth]{../tests/greedy_init/17.png} }\quad
+\subfigure[26 miast]{\includegraphics[width=.5\textwidth]{../tests/greedy_init/26.png} } 
+}
+\mbox{\subfigure[42 miasta]{\includegraphics[width=.5\textwidth]{../tests/greedy_init/42.png} } 
+\subfigure[48 miast]{\includegraphics[width=.5\textwidth]{../tests/greedy_init/48.png} } 
+}
+\caption{Populacja algorytmu ewolucyjnego inicjowana wynikiem działania algorytmu zachłannego}
+\end{figure}
+\section{Wnioski}
  
 \nocite{*}
 \bibliographystyle{plain}
