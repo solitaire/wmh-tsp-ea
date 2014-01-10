@@ -293,6 +293,21 @@ Poszczególne przypadki testowe będą uruchamiane dla ustalonej wartości ziarn
 Do testowania zaimplementowanego algorytmu ewolucyjnego wykorzystane zostaną zestawy danych, dla których z~góry znany jest koszt optymalnego cyklu. W~celu porównania skuteczności poszczególnych ustawień algorytmu, dla każdego z~przypadków testowych zostaną wykreślone dystrybuanty empiryczne -- miarą jakości algorytmu będzie różnica pomiędzy optymalnym kosztem cyklu a~kosztem obliczonym przez algorytm.
 
 \section{Wyniki testów}
+		\begin{table}[h]
+			\begin{tabular}{ |l |c |}
+				\hline
+  				Liczba miast & Optimum\\
+  				\hline
+  				17 & 2085\\
+  				\hline
+  				26 & 937\\
+  				\hline
+  				42 & 699\\
+  				\hline
+  				48 & 10628\\
+  				\hline
+			\end{tabular}
+		\end{table}
 \subsection{Wpływ prawdopodobieństwa mutacji}
 \begin{figure}[H]
 \centering
@@ -388,7 +403,12 @@ Do testowania zaimplementowanego algorytmu ewolucyjnego wykorzystane zostaną ze
 \caption{Populacja algorytmu ewolucyjnego inicjowana wynikiem działania algorytmu zachłannego}
 \end{figure}
 \section{Wnioski}
- 
+%TODO tu tylko ogólne wnioski - przy wykresach bardziej szczegółowe?
+Na podstawie otrzymanych wyników można zauważyć, że niezależnie od przyjętych wartości prawdopodobieństwa krzyżowania i~mutacji algorytm ewolucyjny nigdy nie osiągnął optimum. Wraz ze wzrostem rozmiaru problemu, otrzymywane wyniki były coraz bardziej odległe od poszukiwanego optimum -- w~przypadku 48 miast zauważalne jest znaczące pogorszenie w~stosunku do wyników otrzymywanych dla problemów o~mniejszym rozmiarze tj. 17, 26, czy 42 miast.
+
+Analiza wpływu wartości prawdopodobieństwa krzyżowania i~mutacji pozwala stwierdzić, iż największy wpływ na działanie algorytmu ewolucyjnego dla problemu komiwojażera miała wartość prawdopodobieństwa mutacji. W~przypadku mutacji, można zaobserwować interesującą właściwość -- całkowite wyłącznie mutacji wyraźnie pogarsza jakość otrzymywanych wyników, natomiast sama jej obecność (nawet z~niewielkim prawdopodobieństwem) wpływa na poprawę otrzymywanych wyników. Zaimplementowany operator krzyżowania Order1, nie wpłynął w~znacznym stopniu na jakość otrzymywanych rozwiązać. Niemniej obecność operatora krzyżowania jest wskazana, a~wartość prawdopodobieństwa krzyżowania powinna przyjmować dosyć dużą wartość.
+
+W~porównaniu do algorytmu zachłannego, algorytm ewolucyjny zdecydowanie gorzej poradził sobie z~problemem komiwojażera.
 \nocite{*}
 \bibliographystyle{plain}
 \bibliography{references}
