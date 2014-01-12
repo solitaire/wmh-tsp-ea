@@ -184,7 +184,6 @@ $q_{i,j}$ oznacza wagę krawędzi pomiędzy wierzchołkami $i$ i $j$.
 \par\vspace{\baselineskip}
 Macierz jest dana w pliku tekstowym, w którym kolejne $q_{i,j}$ w wierszu $j$ są oddzielone co najmniej jednym znakiem białym. Przez znak biały rozumiemy
 spację lub tabulator. Pierwszy wiersz pliku zawiera wymiar macierzy.
->>>>>>> Stashed changes
 
 Poniżej przedstawiono przykładowy, poprawny plik wejściowy:
 
@@ -231,7 +230,7 @@ W ramach testów działanie algorytmu ewolucyjnego zostanie zweryfikowane dla sz
 	\item prawdopodobieństwa krzyżowania $p_c$.
 \end{itemize}
 
-Podczas testowania będziemy analizować następujące kombinacje wartości wartości prawdopodobieństwa mutacji $(p_m)$ i prawdopodobieństwa krzyżowania $(p_c)$.
+Podczas testowania będziemy analizować następujące kombinacje wartości wartości prawdopodobieństwa mutacji $p_m$ i prawdopodobieństwa krzyżowania $p_c$.
 
 \bigskip
 
@@ -239,9 +238,22 @@ Dla ustalonej wartości $p_c = 0,9$ - zbadanie wpływu zmian $p_m$:
 \begin{center}
 \begin{tabular}{|l|l|l|l|}
 \hline
-\multicolumn{4}{|c|}{$(p_c; p_m)$} \\
+\multicolumn{4}{|c|}{$(p_m; p_c)$} \\
 \hline
-(0,9; 0,1) & (0,9; 0,5) & (0,9; 0,9) & (0,9; 1)\\
+(0,1; 0,9) & (0,5; 0,9) & (0,9; 0,9) & (1; 0,9)\\
+\hline
+\end{tabular}
+\end{center}
+
+\bigskip
+
+Dla wyłączonego krzyżowania $p_c = 0$ - zbadanie wpływu zmian $p_m$:
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\multicolumn{4}{|c|}{$(p_m; p_c)$} \\
+\hline
+(0,1; 0) & (0,5; 0) & (0,9; 0) & (1; 0)\\
 \hline
 \end{tabular}
 \end{center}
@@ -252,33 +264,20 @@ Dla ustalonej wartości $p_m = 0,1$ - zbadanie wpływu zmian $p_c$:
 \begin{center}
 \begin{tabular}{|l|l|l|l|}
 \hline
-\multicolumn{4}{|c|}{$(p_c; p_m)$} \\
+\multicolumn{4}{|c|}{$(p_m; p_c)$} \\
 \hline
-(0,1; 0,1) & (0,5; 0,1) & (0,9; 0,1) & (1; 0,1)\\
-\hline
-\end{tabular}
-\end{center}
-
-\bigskip
-
-Dla wyłączonej mutacji $p_m = 0$ - zbadanie wpływu zmian $p_c$
-\begin{center}
-\begin{tabular}{|l|l|l|l|}
-\hline
-\multicolumn{4}{|c|}{$(p_c$, $p_m)$} \\
-\hline
-(0,1; 0) & (0,5; 0) & (0,9; 0) & (1; 0)\\
+(0,1; 0,1) & (0,1; 0,5) & (0,1; 0,9) & (0,1; 1)\\
 \hline
 \end{tabular}
 \end{center}
 
 \bigskip
 
-Dla wyłączonego krzyżowania $p_c = 0$ - zbadanie wpływu zmian $p_m$
+Dla wyłączonej mutacji $p_m = 0$ - zbadanie wpływu zmian $p_c$:
 \begin{center}
 \begin{tabular}{|l|l|l|l|}
 \hline
-\multicolumn{4}{|c|}{$(p_c$, $p_m)$} \\
+\multicolumn{4}{|c|}{$(p_m; p_c)$} \\
 \hline
 (0; 0,1) & (0; 0,5) & (0; 0,9) & (0; 1)\\
 \hline
@@ -286,57 +285,70 @@ Dla wyłączonego krzyżowania $p_c = 0$ - zbadanie wpływu zmian $p_m$
 \end{center}
 
 \bigskip
-Pojedynczy przypadek testowy polega na uruchomieniu algorytmu ewolucyjnego dla określonego problemu i zadanych wartości prawdopodobieństwa mutacji $p_m$ i prawdopodobieństwa krzyżowania $p_c$. Każdy przypadek testowy uruchomiony będzie niezależnie $RUNS = 15$ razy.
 
-Poszczególne przypadki testowe będą uruchamiane dla ustalonej wartości ziarna generatora liczb pseudolosowych -- w ten sposób sekwencje liczb pseudolosowych dla każdej wersji algorytmu będą jednakowe, co umożliwi porównanie ich skuteczności.
+Pojedynczy przypadek testowy polega na uruchomieniu algorytmu ewolucyjnego dla określonego 
+problemu i zadanych wartości prawdopodobieństwa mutacji $p_m$ i prawdopodobieństwa 
+krzyżowania $p_c$. Każdy przypadek testowy uruchomiony będzie niezależnie $RUNS = 15$ razy.\\
+\\
+Poszczególne przypadki testowe będą uruchamiane dla ustalonej wartości ziarna generatora 
+liczb pseudolosowych -- w ten sposób sekwencje liczb pseudolosowych dla każdej wersji 
+algorytmu będą jednakowe, co umożliwi porównanie ich skuteczności.\\
+\\
+Do testowania zaimplementowanego algorytmu ewolucyjnego wykorzystane zostaną zestawy danych,
+dla których z~góry znany jest koszt optymalnego cyklu. W~celu porównania skuteczności 
+poszczególnych ustawień algorytmu, dla każdego z~przypadków testowych zostaną wykreślone 
+dystrybuanty empiryczne -- miarą jakości algorytmu będzie różnica pomiędzy optymalnym 
+kosztem cyklu a~kosztem obliczonym przez algorytm.
 
-Do testowania zaimplementowanego algorytmu ewolucyjnego wykorzystane zostaną zestawy danych, dla których z~góry znany jest koszt optymalnego cyklu. W~celu porównania skuteczności poszczególnych ustawień algorytmu, dla każdego z~przypadków testowych zostaną wykreślone dystrybuanty empiryczne -- miarą jakości algorytmu będzie różnica pomiędzy optymalnym kosztem cyklu a~kosztem obliczonym przez algorytm.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{ | c | c | }
+    \hline
+    Liczba miast & Minimum\\
+    \hline
+    17 & 2085\\
+    \hline
+    26 & 937\\
+    \hline
+    42 & 699\\
+    \hline
+    48 & 10628\\
+    \hline
+  \end{tabular}
+  \caption{Długość optymalnych cykli}
+\end{table}
 
 \section{Wyniki testów}
-		\begin{table}[h]
-			\begin{tabular}{ |l |c |}
-				\hline
-  				Liczba miast & Optimum\\
-  				\hline
-  				17 & 2085\\
-  				\hline
-  				26 & 937\\
-  				\hline
-  				42 & 699\\
-  				\hline
-  				48 & 10628\\
-  				\hline
-			\end{tabular}
-		\end{table}
+
 \subsection{Wpływ prawdopodobieństwa mutacji}
 \begin{figure}[H]
 \centering
-\mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/normal/17.png} }\quad
-\subfigure[$p_c = 0$ - wyłączone krzyżowanie]{\includegraphics[width=.5\textwidth]{../tests/normal/17m.png} } 
+\mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/old/17m.png} }\quad
+\subfigure[$p_c = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/17m.png} } 
 }
 \caption{Wpływ mutacji na działanie algorytmu - 17 miast}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/normal/26.png} }\quad
-\subfigure[$p_c = 0$ - wyłączone krzyżowanie]{\includegraphics[width=.5\textwidth]{../tests/normal/26m.png} } 
+\mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/old/26m.png} }\quad
+\subfigure[$p_c = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/26m.png} } 
 }
 \caption{Wpływ mutacji na działanie algorytmu - 26 miast}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/normal/42.png} }\quad
-\subfigure[$p_c = 0$ - wyłączone krzyżowanie]{\includegraphics[width=.5\textwidth]{../tests/normal/42m.png} } 
+\mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/old/42m.png} }\quad
+\subfigure[$p_c = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/42m.png} } 
 }
 \caption{Wpływ mutacji na działanie algorytmu - 42 miasta}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/normal/48.png} }\quad
-\subfigure[$p_c = 0$ - wyłączone krzyżowanie]{\includegraphics[width=.5\textwidth]{../tests/normal/48m.png} } 
+\mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/old/48m.png} }\quad
+\subfigure[$p_c = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/48m.png} } 
 }
 \caption{Wpływ mutacji na działanie algorytmu - 48 miast}
 \end{figure}
@@ -344,71 +356,90 @@ Do testowania zaimplementowanego algorytmu ewolucyjnego wykorzystane zostaną ze
 \subsection{Wpływ prawdopodobieństwa krzyżowania}
 \begin{figure}[H]
 \centering
-\mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/normal/17.png} }\quad
-\subfigure[$p_m = 0$ - wyłączona mutacja]{\includegraphics[width=.5\textwidth]{../tests/normal/17c.png} } 
+\mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/old/17c.png} }\quad
+\subfigure[$p_m = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/17c.png} } 
 }
 \caption{Wpływ krzyżowania na działanie algorytmu - 17 miast}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/normal/26.png} }\quad
-\subfigure[$p_m = 0$ - wyłączona mutacja]{\includegraphics[width=.5\textwidth]{../tests/normal/26c.png} } 
+\mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/old/26c.png} }\quad
+\subfigure[$p_m = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/26c.png} } 
 }
 \caption{Wpływ krzyżowania na działanie algorytmu - 26 miast}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/normal/42.png} }\quad
-\subfigure[$p_m = 0$ - wyłączona mutacja]{\includegraphics[width=.5\textwidth]{../tests/normal/42c.png} } 
+\mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/old/42c.png} }\quad
+\subfigure[$p_m = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/42c.png} } 
 }
 \caption{Wpływ krzyżowania na działanie algorytmu - 42 miasta}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/normal/48.png} }\quad
-\subfigure[$p_m = 0$ - wyłączona mutacja]{\includegraphics[width=.5\textwidth]{../tests/normal/48c.png} } 
+\mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/old/48c.png} }\quad
+\subfigure[$p_m = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/48c.png} } 
 }
 \caption{Wpływ krzyżowania na działanie algorytmu - 48 miast}
 \end{figure}
 
 \subsection{Porównanie z algorytmem zachłannym}
-	\subsubsection{Algorytm zachłanny}
-		\begin{table}[h]
-			\begin{tabular}{ |l |c |r |}
-				\hline
-  				Liczba miast & Optimum & Najlepszy wynik \\
-  				\hline
-  				17 & 2085 & 2178\\
-  				\hline
-  				26 & 937 & 965\\
-  				\hline
-  				42 & 699 & 864\\
-  				\hline
-  				48 & 10628 & 37928\\
-  				\hline
-			\end{tabular}
-		\end{table}
-	\subsubsection{Populacja algorytmu ewolucyjnego inicjowana wynikiem działania algorytmu zachłannego}
-\begin{figure}[H]
+
+Algorytm zachłanny zaczyna od losowego miasta. Następnie przechodzi do najbliższego 
+nieodwiedzonego miasta. Kończy działanie w momencie odwiedzenia wszystkich miast, czyli
+znalezienia cyklu. Jak na szybkość i prostotę algorytmu, znajdowane rozwiązanie są zaskakująco 
+dobre, znacznie lepsze niż te otrzymywane przez którykolwiek algorytm ewolucyjny.
+
+\begin{table}[h]
 \centering
-\mbox{\subfigure[17 miast]{\includegraphics[width=.5\textwidth]{../tests/greedy_init/17.png} }\quad
-\subfigure[26 miast]{\includegraphics[width=.5\textwidth]{../tests/greedy_init/26.png} } 
-}
-\mbox{\subfigure[42 miasta]{\includegraphics[width=.5\textwidth]{../tests/greedy_init/42.png} } 
-\subfigure[48 miast]{\includegraphics[width=.5\textwidth]{../tests/greedy_init/48.png} } 
-}
-\caption{Populacja algorytmu ewolucyjnego inicjowana wynikiem działania algorytmu zachłannego}
-\end{figure}
+	\begin{tabular}{ | c | c | c | c | } 
+		\hline
+  		Liczba miast & Optimum & Algorytm zachłanny & Algorytm ewolucyjny \\
+  		\hline
+  		17 & 2085 & 2178 & 2349 \\
+  		\hline
+  		26 & 937 & 965 & 1522\\
+  		\hline
+  		42 & 699 & 864 & 1794\\
+  		\hline
+  		48 & 10628 & 37928 & 92101\\
+  		\hline
+	\end{tabular}
+\caption{Najlepsze wyniki uzyskane przez algorytm zachłanny oraz ewolucyjny.}
+\end{table}
+	
 \section{Wnioski}
-%TODO tu tylko ogólne wnioski - przy wykresach bardziej szczegółowe?
-Na podstawie otrzymanych wyników można zauważyć, że niezależnie od przyjętych wartości prawdopodobieństwa krzyżowania i~mutacji algorytm ewolucyjny nigdy nie osiągnął optimum. Wraz ze wzrostem rozmiaru problemu, otrzymywane wyniki były coraz bardziej odległe od poszukiwanego optimum -- w~przypadku 48 miast zauważalne jest znaczące pogorszenie w~stosunku do wyników otrzymywanych dla problemów o~mniejszym rozmiarze tj. 17, 26, czy 42 miast.
 
-Analiza wpływu wartości prawdopodobieństwa krzyżowania i~mutacji pozwala stwierdzić, iż największy wpływ na działanie algorytmu ewolucyjnego dla problemu komiwojażera miała wartość prawdopodobieństwa mutacji. W~przypadku mutacji, można zaobserwować interesującą właściwość -- całkowite wyłącznie mutacji wyraźnie pogarsza jakość otrzymywanych wyników, natomiast sama jej obecność (nawet z~niewielkim prawdopodobieństwem) wpływa na poprawę otrzymywanych wyników. Zaimplementowany operator krzyżowania Order1, nie wpłynął w~znacznym stopniu na jakość otrzymywanych rozwiązać. Niemniej obecność operatora krzyżowania jest wskazana, a~wartość prawdopodobieństwa krzyżowania powinna przyjmować dosyć dużą wartość.
+%TODO tu tylko ogólne wnioski - przy wykresach bardziej szczegółowe? 
+% ja bym tu dał wszystkie wnioski (robiac ew. odwolania do tamtych rysunkow)
 
-W~porównaniu do algorytmu zachłannego, algorytm ewolucyjny zdecydowanie gorzej poradził sobie z~problemem komiwojażera.
+Na podstawie otrzymanych wyników można zauważyć, że niezależnie od przyjętych wartości 
+prawdopodobieństwa krzyżowania i~mutacji algorytm ewolucyjny nigdy nie osiągnął optimum.
+ Wraz ze wzrostem rozmiaru problemu, otrzymywane wyniki były coraz bardziej odległe od 
+poszukiwanego optimum -- w~przypadku 48 miast zauważalne jest znaczące pogorszenie w~stosunku 
+do wyników otrzymywanych dla problemów o~mniejszym rozmiarze tj. 17, 26, czy 42.\\
+\\
+Analiza wpływu wartości prawdopodobieństwa mutacji i~krzyżowania pozwala stwierdzić, 
+że większy wpływ na działanie algorytmu ewolucyjnego dla problemu komiwojażera miała mutacja. 
+Całkowite wyłącznie mutacji wyraźnie pogarsza jakość otrzymywanych wyników. 
+Sama jej obecność (nawet z~niewielkim prawdopodobieństwem) wyraźnie wpływa na poprawę 
+otrzymywanych wyników. Ma to swoje uzasadnienie praktyczne - mając dowolny cykl, łatwo
+jest go poprawić dokonując małych zmian.\\
+\\
+Zaimplementowany operator krzyżowania Order1, nie wpłynął w~znacznym 
+stopniu na jakość otrzymywanych rozwiązać. Spowodowane jest to tym, że
+operator krzyżowania wprowadza ogromne zmiany do rozwiązania, praktycznie rozrywając dwa cykle, 
+więc istnieje bardzo mała szansa poprawy. Niemniej obecność operatora krzyżowania jest wskazana, 
+a~wartość prawdopodobieństwa krzyżowania powinna przyjmować dosyć dużą wartość.\\
+\\
+W~porównaniu do algorytmu zachłannego, algorytm ewolucyjny zdecydowanie gorzej poradził sobie 
+z~problemem komiwojażera. Warto zatem do populacji początkowej dla algorytmu ewolucyjnego
+wprowadzać po kilka różnych rozwiązań wygenerowanych przez algorytm zachłanny. Gwarantuje to znacznie lepszy
+start, bliżej optimum globalnego. 
+
 \nocite{*}
 \bibliographystyle{plain}
 \bibliography{references}
