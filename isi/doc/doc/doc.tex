@@ -9,7 +9,7 @@
 \usepackage[table]{xcolor}
 \usepackage{graphicx}
 \usepackage{subfigure}
-\title{\textbf{Zastosowanie algorytmu ewolucyjnego do rozwiązywania problemu komiwojażera}}
+\title{\textbf{Optymalna trasa dla kuriera - zastosowanie algorytmu ewolucyjnego}}
 \author{Anna Stępień \\ Adam Stelmaszczyk}
 \date{\today}
 \setlength{\parindent}{0in}
@@ -19,16 +19,16 @@
 \maketitle
 
 \section{Zadanie}
-Celem zadania jest zaprojektowanie algorytmu ewolucyjnego, który zostanie wykorzystany do rozwiązania problemu komiwojażera.
+Celem zadania jest zaprojektowanie algorytmu ewolucyjnego, który zostanie wykorzystany do poszukiwania optymalnej trasy dla kuriera. Zadanie to może być interpretowane jako problem komiwojażera.
 Przedstawiona została reprezentacja rozwiązania, metoda sukcesji oraz operatory mutacji i krzyżowania. 
 Z punktu widzenia przydatności projektowanego algorytmu, istotne jest przetestowanie go dla różnych parametrów, w szczególności dla:
 \begin{itemize}
 	\item różnych wartości prawdopodobieństwa mutacji $p_m$ i krzyżowania $p_c$,
-	\item grafów o różnej liczbie wierzchołków $d$.
+	\item różnej liczy miast, które ma odwiedzić kurier $d$.
 \end{itemize}
 
 \section{Założenia}
-Aplikacja będzie pracować w trybie konsolowym. Na standardowe wejście podawane będą pliki tekstowe zawierające opis grafów.
+Aplikacja będzie pracować w trybie konsolowym. Na standardowe wejście podawany będzie plik zawierający zestaw współrzędnych geograficznych punktów, które mają zostać odwiedzone przez kuriera. Do obliczenia odległości pomiędzy poszczególnymi punktami zostaną wykorzystane dane pozyskane z \url{http://www.openstreetmap.org/}.
 Program będzie wypisywał odpowiedź na standardowe wyjście.
 
 \subsection{Reprezentacja rozwiązań}
@@ -165,38 +165,7 @@ Wyjściem jest jedna populacja o rozmiarze $n$.
 \subsection{Założenia programu}
 \begin{description}
 	\item[Wejście] \hfill \\
-Wejściem dla algorytmu jest graf nieskierowany dany macierzą o~$n$~wierszach i~$n$~kolumnach:
-
-\bigskip
-$ 
-\begin{array}{llll}
-n \\
-q_{0,0} & q_{1,0} & \ldots & q_{n-1,0} \\
-q_{0,1} & q_{1,1} & \ldots & q_{n-1,1} \\
-\vdots  & \vdots  & \ddots & \vdots  \\
-q_{0,n-1} & q_{1,n-1} & \ldots & q_{n-1,n-1} 
-\end{array}
-, q_{i,j} \in \{0,1\}, 0 \leq i,j < n
-$
-\bigskip
-
-$q_{i,j}$ oznacza wagę krawędzi pomiędzy wierzchołkami $i$ i $j$.
-\par\vspace{\baselineskip}
-Macierz jest dana w pliku tekstowym, w którym kolejne $q_{i,j}$ w wierszu $j$ są oddzielone co najmniej jednym znakiem białym. Przez znak biały rozumiemy
-spację lub tabulator. Pierwszy wiersz pliku zawiera wymiar macierzy.
-
-Poniżej przedstawiono przykładowy, poprawny plik wejściowy:
-
-\bigskip
-$ 
-\begin{array}{llll}
-4 \\
-0.0 & 1.0 & 3.6 & 2.0 \\
-1.0 & 0.0 & 2.8 & 2.2 \\
-3.6 & 2.8 & 0.0 & 3.0 \\
-2.0 & 2.2 & 3.0 & 0.0
-\end{array}
-$
+Wejściem dla algorytmu %TODO opisać jaki format przyjmuje aplikacja
 	\item[Wyjście] \hfill \\
 	Wyjściem algorytmu jest plik tekstowy zawierający koszt najtańszego cyklu znalezionego przez algorytm.
 	\item[Kryteria stopu] \hfill \\
@@ -211,23 +180,18 @@ $
 	\item[Złożoność obliczeniowa] \hfill \\
 	Złożoność obliczeniowa operatorów genetycznych: mutacji oraz krzyżowania jest równa $O(d)$, 
 gdzie $d$ to rozmiar rozwiązania (liczba miast). Złożoność obliczeniowa selekcji wynosi $O(1)$. Złożoność obliczeniowa
-sukcesji jest liniowa względem liczby rozwiązań w populacji $n$, czyli $O(n)$. 
-	\item[Sytuacje awaryjne] \hfill \\
-Problemami, które mogą wystąpić podczas działania aplikacji są:
-	\begin{itemize}
-        \item błędny format danych wejściowych,
-        \item błędny format parametrów aplikacji.
-	\end{itemize}
-
-W przypadku, gdy algorytm otrzyma na wejściu błędne dane np. liczba wierszy macierzy będzie niezgodna z zadeklarowaną na początku pliku z danymi lub , użytkownik zostanie poinformowany o zaistniałej sytuacji, a dalsze działanie programu zostanie przerwane.
+sukcesji jest liniowa względem liczby rozwiązań w populacji $n$, czyli $O(n)$.
 
 \end{description}
 
 \section{Projekt testów}
+%TODO tu opisać, że na tych grafach testowaliśmy dobór odpwiednich parametrów,
+% jescze przed testowaniem na rzeczywistych danych z osm
 W ramach testów działanie algorytmu ewolucyjnego zostanie zweryfikowane dla szeregu problemów o~różniej wielkości. Szczególnie istotne jest zbadanie skuteczności algorytmu w~zależności od doboru wartości:
 \begin{itemize}
 	\item prawdopodobieństwa mutacji $p_m$,
-	\item prawdopodobieństwa krzyżowania $p_c$.
+	\item prawdopodobieństwa krzyżowania $p_c$,
+	\item liczby miast.
 \end{itemize}
 
 Podczas testowania będziemy analizować następujące kombinacje wartości wartości prawdopodobieństwa mutacji $p_m$ i prawdopodobieństwa krzyżowania $p_c$.
@@ -411,6 +375,8 @@ dobre, znacznie lepsze niż te otrzymywane przez którykolwiek algorytm ewolucyj
 \caption{Najlepsze wyniki uzyskane przez algorytm zachłanny oraz ewolucyjny.}
 \end{table}
 
+\subsection{Testy dla danych pochodzących z OpenStreetMap}
+%TODO tu opisać testy na danych z osm, losowe miasta itd
 \subsection{Czas wykonania dla grafów losowych}
 
 Przebadano czas wykonania na grafach losowych o 5, 10, 20 oraz 40 miastach.
@@ -457,7 +423,7 @@ kwadratowy przyrost długości obliczeń, stąd złożoność obliczeniowa
 testowanego algorytmu to O$(d^2)$.
 
 \section{Wnioski}
-
+%TODO odpowiednio zmodyfikować wnioski
 Na podstawie otrzymanych wyników można zauważyć, że niezależnie od przyjętych wartości 
 prawdopodobieństwa krzyżowania i~mutacji algorytm ewolucyjny nigdy nie osiągnął optimum.
  Wraz ze wzrostem rozmiaru problemu, otrzymywane wyniki były coraz bardziej odległe od 
