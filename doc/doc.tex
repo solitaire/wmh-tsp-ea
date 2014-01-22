@@ -410,11 +410,53 @@ dobre, znacznie lepsze niż te otrzymywane przez którykolwiek algorytm ewolucyj
 	\end{tabular}
 \caption{Najlepsze wyniki uzyskane przez algorytm zachłanny oraz ewolucyjny.}
 \end{table}
-	
-\section{Wnioski}
 
-%TODO tu tylko ogólne wnioski - przy wykresach bardziej szczegółowe? 
-% ja bym tu dał wszystkie wnioski (robiac ew. odwolania do tamtych rysunkow)
+\subsection{Czas wykonania dla grafów losowych}
+
+Przebadano czas wykonania na grafach losowych o 5, 10, 20 oraz 40 miastach.
+Dla każdej liczby miast brano pod uwagę uśredniony czas z 10 prób (na różnych grafach losowych).
+Badanym algorytmem był algorytm ewolucyjny z $p_m=0,1$ oraz $p_c=0,9$.
+Losowy graf o $d$ miastach generowano w następujący sposób:
+
+\begin{enumerate}
+ \item Pobierz $d$ losowych miast Polski z \url{http://www.openstreetmap.org/}.
+ \item Na podstawie ich położeń wygeneruj wejściową macierz odległości.
+\end{enumerate}
+
+Wyniki eksperymentów przedstawiono w poniższej tabeli:
+
+\begin{table}[h]
+\centering
+	\begin{tabular}{ | c | c | c | c | } 
+		\hline
+  		Liczba miast & Średni czas [s] \\
+  		\hline
+  		5 & 8,3 \\
+  		\hline
+  		10 & 18,2 \\
+  		\hline
+  		20 & 91,9 \\
+  		\hline
+  		40 & 319,2 \\
+  		\hline
+	\end{tabular}
+\caption{Średnie czasy wykonania uzyskane przez algorytm ewolucyjny.}
+\end{table}
+
+Na poniższym grafie zaznaczono czerwonymi punktami punkty pomiarowe:
+
+\begin{figure}[H]
+\centering
+  \includegraphics[width=.5\textwidth]{time.png}
+\end{figure}
+
+Niebieska linia przedstawia funkcję $54,25x^2 - 170,55x + 128,75$ aproksymującą
+złożoność czasową testowanego algorytmu ewolucyjnego. Funkcja ta została znaleziona przy pomocy
+\url{http://www.wolframalpha.com}. Podwojenie wielkości danych wejściowych $d$ (liczby miast) powoduje
+kwadratowy przyrost długości obliczeń, stąd złożoność obliczeniowa 
+testowanego algorytmu to O$(d^2)$.
+
+\section{Wnioski}
 
 Na podstawie otrzymanych wyników można zauważyć, że niezależnie od przyjętych wartości 
 prawdopodobieństwa krzyżowania i~mutacji algorytm ewolucyjny nigdy nie osiągnął optimum.
