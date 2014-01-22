@@ -1,6 +1,5 @@
 package graph;
 
-import java.io.InputStream;
 
 public class Graph
 {
@@ -8,17 +7,12 @@ public class Graph
 	public final int D;
 	/** Weights of edges. */
 	public final double[][] weights;
+	/** Coords mapping */
 	
 	public Graph(final double[][] weights) 
 	{
 		this.weights = weights;
 		this.D = weights.length;
-	}
-
-	public Graph(InputStream stream)
-	{
-		weights = GraphReader.readWeights(stream);
-		D = weights.length;
 	}
 
 	@Override

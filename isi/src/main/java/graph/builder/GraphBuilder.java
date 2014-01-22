@@ -2,6 +2,7 @@ package graph.builder;
 
 import graph.Graph;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -14,8 +15,9 @@ import com.graphhopper.GraphHopperAPI;
 
 public class GraphBuilder
 {
-	public static void main(String[] args)
+	public static Graph build(final InputStream in, final String osmMapName) 
 	{
+		// Sets default locale to always have 1.23 not 1,23
 		Locale.setDefault(Locale.US);
 		final Scanner scanner = new Scanner(System.in);
 		List<Coords> coords = new ArrayList<Coords>();
@@ -27,7 +29,7 @@ public class GraphBuilder
 		int D = coords.size();
 		double [][] weights = new double[D][D];
 		GraphHopperAPI gh = new GraphHopper().forServer();
-		gh.load("europe_poland-gh");
+		gh.load(osmMapName);
 		
 		for (int y = 0; y < D; y++)
 		{
@@ -38,12 +40,11 @@ public class GraphBuilder
 				GHRequest request = new GHRequest(start.getLatitude(), start.getLongitute(), end.getLatitude(), end.getLongitute()); 
 				request.setAlgorithm("astarbi"); 
 				GHResponse response = gh.route(request);
-				weights[x][y] = response.getDistance();
+				// getDistance returns value in meters, change to kilometers
+				weights[x][y] = response.getDistance() / 1000;
 			}
 		}
 		
-		Graph graph = new Graph(weights);
-		System.out.println(D);
-		System.out.println(graph);
+		return new Graph(weights);
 	}
 }

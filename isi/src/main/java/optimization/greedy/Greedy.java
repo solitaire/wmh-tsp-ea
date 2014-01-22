@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import optimization.BestResult;
 import optimization.Optimizer;
 import optimization.Solution;
 import testing.Main;
@@ -21,7 +22,7 @@ public class Greedy extends Optimizer
 	}
 
 	@Override
-	public double optimize()
+	public BestResult optimize()
 	{
 		final List<Integer> visitedCities = new ArrayList<Integer>(D);
 		double length = 0.0;
@@ -46,7 +47,7 @@ public class Greedy extends Optimizer
 		length += graph.weights[actualCity][START_CITY];
 		solution = new Solution(D);
 		visitedCities.toArray(solution.cities);
-		return length;
+		return new BestResult(length, solution);
 	}
 
 	private int getNearestUnvisitedCity(Set<Integer> unvisited, int from)

@@ -1,6 +1,7 @@
 package optimization.ea;
 
 import graph.Graph;
+import optimization.BestResult;
 import optimization.Evaluator;
 import optimization.Optimizer;
 import optimization.Solution;
@@ -30,7 +31,7 @@ public class EA extends Optimizer
 		this.greedyStart = greedyStart;
 	}
 
-	public double optimize()
+	public BestResult optimize()
 	{
 		Population actual;
 		if (greedyStart)
@@ -63,7 +64,7 @@ public class EA extends Optimizer
 			succesion(actual, children, evaluator);
 		}
 		while (!evaluator.hasReachedMaxFunEvals());
-		return evaluator.getBestObservedScore();
+		return new BestResult(evaluator.getBestObservedScore(), evaluator.getBestObservedSolution());
 	}
 
 	private Solution select(Population pop)

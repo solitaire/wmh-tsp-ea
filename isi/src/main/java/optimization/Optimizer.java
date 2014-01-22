@@ -13,5 +13,5 @@ public abstract class Optimizer
 		this.graph = graph;
 	}
 
-	abstract public double optimize();
+	abstract public BestResult optimize();
 }

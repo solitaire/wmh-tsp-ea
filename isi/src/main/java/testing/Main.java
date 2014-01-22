@@ -1,10 +1,11 @@
 package testing;
 
 import graph.Graph;
+import graph.builder.GraphBuilder;
 
-import java.util.Locale;
 import java.util.Random;
 
+import optimization.BestResult;
 import optimization.Optimizer;
 import optimization.ea.EA;
 import optimization.greedy.Greedy;
@@ -17,12 +18,11 @@ public class Main
 	private final static double DEFAULT_MUTATION_PROBABILITY = 0.1;
 	private final static double DEFAULT_CROSSOVER_PROBABILITY = 0.9;
 	private final static int RUNS = 15;
+	private final static String OSM_MAP_NAME = "europe_poland-gh";
 
 	public static void main(String[] args)
 	{
-		// Sets default locale to always have 1.23 not 1,23
-		Locale.setDefault(Locale.US);
-		final Graph graph = new Graph(System.in);
+		final Graph graph = GraphBuilder.build(System.in, OSM_MAP_NAME);
 
 		double mutationProbability = DEFAULT_MUTATION_PROBABILITY;
 		double crossoverProbability = DEFAULT_CROSSOVER_PROBABILITY;
@@ -52,7 +52,9 @@ public class Main
 
 		for (int i = 0; i < RUNS; i++)
 		{
-			System.out.println(optimizer.optimize());
+			BestResult bestResult = optimizer.optimize();
+			System.out.println(bestResult.getOptimum());
+			System.out.println(bestResult.getSolution());
 		}
 	}
 }

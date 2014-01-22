@@ -2,7 +2,7 @@
 
 if [ $# -lt 1 ]
 then
-	echo "Usage: $0 TEST_FILE.in [MUTATION_PROBABILITY] [CROSSOVER_PROBABILITY] [greedystart]"
+	echo "Usage: $0 LOCATIONS_FILE.in [MUTATION_PROBABILITY] [CROSSOVER_PROBABILITY] [greedystart]"
 	return
 fi
 
