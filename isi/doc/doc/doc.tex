@@ -9,6 +9,7 @@
 \usepackage[table]{xcolor}
 \usepackage{graphicx}
 \usepackage{subfigure}
+\usepackage{placeins}
 \title{\textbf{Optymalna trasa dla kuriera - zastosowanie algorytmu ewolucyjnego}}
 \author{Anna Stępień \\ Adam Stelmaszczyk}
 \date{\today}
@@ -19,17 +20,17 @@
 \maketitle
 
 \section{Zadanie}
-Celem zadania jest zaprojektowanie algorytmu ewolucyjnego, który zostanie wykorzystany do poszukiwania optymalnej trasy dla kuriera. Zadanie to może być interpretowane jako problem komiwojażera.
+Celem zadania jest zaprojektowanie algorytmu ewolucyjnego, który zostanie wykorzystany do poszukiwania optymalnej trasy dla kuriera.
 Przedstawiona została reprezentacja rozwiązania, metoda sukcesji oraz operatory mutacji i krzyżowania. 
 Z punktu widzenia przydatności projektowanego algorytmu, istotne jest przetestowanie go dla różnych parametrów, w szczególności dla:
 \begin{itemize}
 	\item różnych wartości prawdopodobieństwa mutacji $p_m$ i krzyżowania $p_c$,
-	\item różnej liczy miast, które ma odwiedzić kurier $d$.
+	\item różnej liczby miast, które ma odwiedzić kurier $d$.
 \end{itemize}
 
 \section{Założenia}
 Aplikacja będzie pracować w trybie konsolowym. Na standardowe wejście podawany będzie plik zawierający zestaw współrzędnych geograficznych punktów, które mają zostać odwiedzone przez kuriera. Do obliczenia odległości pomiędzy poszczególnymi punktami zostaną wykorzystane dane pozyskane z \url{http://www.openstreetmap.org/}.
-Program będzie wypisywał odpowiedź składającą się z kosztu przejazdu oraz kolejnych miast, które należy odwiedzić na standardowe wyjście.
+Program będzie wypisywał odpowiedź składającą się z kosztu przejazdu oraz kolejnych miast, które należy odwiedzić.
 
 \subsection{Reprezentacja rozwiązań}
 
@@ -160,21 +161,30 @@ Wyjściem jest jedna populacja o rozmiarze $n$.
 	\paragraph{Rozwiązanie}
 		Rozwiązanie jest reprezentowane jako tablica $d$ liczb całkowitych, której elementy są numerami miast.
 	\paragraph{Populacja}
-		Populacja jest reprezentowana jako tablica rozwiązań. Rozmiar populacji jest stały i równy $n = 10d$.
+		Populacja jest reprezentowana jako tablica rozwiązań. Rozmiar populacji
+jest zależny od liczby miast $d$.
+Przy testowaniu $p_m$ oraz $p_c$ rozmiar populacji jest stały i równy $n = 10d$.
+Testując wpływ rozmiaru populacji, to prawdopodobieństwa są stałe, $p_m=0,1$ oraz $p_c=0,9$,
+zaś rozmiar populacji $n$ wynosi $d, 10d$ lub $100d$.
 
 \subsection{Założenia programu}
 \begin{description}
 	\item[Wejście] \hfill \\
-Wejściem dla algorytmu jest plik tekstowy zawierający w kolejnych liniach współrzędne geograficzne miejsc, które ma odwiedzić kurier. 
+Wejściem dla algorytmu jest plik tekstowy zawierający w kolejnych liniach współrzędne geograficzne miejsc, które ma odwiedzić kurier. Poniżej przedstawiony został przykładowy, poprawny plik wejściowy.
+
+\bigskip
+$ 
+\begin{array}{ll}
+52.259 &  21.020 \\
+50.060 & 19.959 \\ 
+54.360 & 18.639 \\
+52.399 & 16.900 \\
+53.120 & 18.010 \\
+51.110 & 17.030  \\
+51.770 & 19.459 \\
+\end{array}
 $
-52.259 21.020 \\ 
-50.060 19.959 \\
-54.360 18.639 \\
-52.399 16.900 \\
-53.120 18.010 \\
-51.110 17.030 \\
-51.770 19.459 \\
-$
+
 	\item[Wyjście] \hfill \\
 	Wyjściem algorytmu jest plik tekstowy zawierający koszt najtańszego cyklu znalezionego przez algorytm oraz współrzędne kolejnych miast, które należy odwiedzić.
 	\item[Kryteria stopu] \hfill \\
@@ -186,7 +196,7 @@ $
 			\item prawdopodobieństwo krzyżowania $p_c$ (domyślna wartość 0,1)
 		\end{itemize}
 		W przypadku, gdy parametry te nie zostaną sprecyzowane, stosowane są wartości domyślne.
-		\item Obliczanie odległości pomiędzy miastami
+	\item [Obliczanie odległości pomiędzy miastami] \hfill \\
 		Do obliczenia odległości pomiędzy punktami na trasie kuriera zostaną wykorzystane dane pozyskane z~OpenStreetMap oraz biblioteka graphhopper\footnote{\url{http://graphhopper.com}}.
 
 \end{description}
@@ -197,7 +207,8 @@ Działanie algorytmu zostało zbadane dla następujących parametrów:
 \begin{itemize}
 	\item prawdopodobieństwa mutacji $p_m$,
 	\item prawdopodobieństwa krzyżowania $p_c$,
-	\item liczby miast.
+	\item liczby miast $d$,
+	\item różnej wielkości populacji $n$.
 \end{itemize}
 
 Podczas testowania analizowane były następujące kombinacje wartości wartości prawdopodobieństwa mutacji $p_m$ i prawdopodobieństwa krzyżowania $p_c$.
@@ -354,6 +365,27 @@ kosztem cyklu a~kosztem obliczonym przez algorytm.
 \caption{Wpływ krzyżowania na działanie algorytmu - 48 miast}
 \end{figure}
 
+\subsection{Wpływ rozmiaru populacji}
+
+Przetestowano jak zmieniają się wyniki algorytmu ewolucyjnego ($p_m=0,1$, $p_c=0,9$)
+dla różnych rozmiarów populacji. Rozmiar populacji $n$ przyjmował wartości $d, 10d, 100d$, gdzie $d$
+to liczba miast. Dystrybuanty empiryczne przedstawiono poniżej.
+
+\begin{figure}[H]
+\centering
+\mbox{\subfigure[17 miast]{\includegraphics[width=.5\textwidth]{../tests/n_to_d_ratio/17.png} }\quad
+\subfigure[48 miast]{\includegraphics[width=.5\textwidth]{../tests/n_to_d_ratio/48.png} } 
+}
+\caption{Wpływ rozmiaru populacji na osiągane wyniki.}
+\end{figure}
+
+Niemal zawsze największy rozmiar populacji sprawdzał się najlepiej. Patrząc
+na przypadek z 48 miastami można również zauważyć, że populacja wielkości $10d$
+lepiej się sprawdzała niż populacja 10 razy mniejsza. Wyniki praktyczne są zgodne z teorią,
+w której mały rozmiar populacji (rzędu $d$) nie jest dobrym pomysłem, ze względu na 
+mniejszą różnorodność wartości dla jednej cechy chromosomu, co ma bezpośrednie odzwierciedlenie
+w jakości otrzymywanych wyników.
+
 \subsection{Porównanie z algorytmem zachłannym}
 
 Algorytm zachłanny zaczyna od losowego miasta. Następnie przechodzi do najbliższego 
@@ -378,12 +410,12 @@ dobre, znacznie lepsze niż te otrzymywane przez którykolwiek algorytm ewolucyj
 	\end{tabular}
 \caption{Najlepsze wyniki uzyskane przez algorytm zachłanny oraz ewolucyjny.}
 \end{table}
+\FloatBarrier
 
 \subsection{Testy dla danych pochodzących z OpenStreetMap}
 Na potrzeby testów aplikacji wykorzystaliśmy dane OpenSteetMap dla obszaru Polski dostępne na stronie\footnote{{http://download.geofabrik.de/europe/poland.html}}. Dane te zostały przetworzone za pomocą biblioteki graphhopper, a następnie wykorzystane do obliczania odległości drogowych pomiędzy zadanymi punktami/miastami. 
 
-\subsection{Czas wykonania dla grafów losowych}
-
+\subsubsection{Czas wykonania dla grafów losowych}
 Przebadano czas wykonania na grafach losowych o 5, 10, 20 oraz 40 miastach.
 Dla każdej liczby miast brano pod uwagę uśredniony czas z 10 prób (na różnych grafach losowych).
 Badanym algorytmem był algorytm ewolucyjny z $p_m=0,1$ oraz $p_c=0,9$.
@@ -425,10 +457,11 @@ Niebieska linia przedstawia funkcję $54,25x^2 - 170,55x + 128,75$ aproksymując
 złożoność czasową testowanego algorytmu ewolucyjnego. Funkcja ta została znaleziona przy pomocy
 \url{http://www.wolframalpha.com}. Podwojenie wielkości danych wejściowych $d$ (liczby miast) powoduje
 kwadratowy przyrost długości obliczeń, stąd złożoność obliczeniowa 
-testowanego algorytmu to O$(d^2)$.
+testowanego algorytmu to O$(d^2)$. Dzieje się tak, ponieważ rozmiar populacji $n$ rośnie
+proporcjonalnie do $d$ oraz jednocześnie liczba wywołań funkcji oceny rośnie o $10^5d$.
+Stąd całkowity czas testu rośnie o O$(d^2)$.
 
 \section{Wnioski}
-%TODO odpowiednio zmodyfikować wnioski
 Na podstawie otrzymanych wyników można zauważyć, że niezależnie od przyjętych wartości 
 prawdopodobieństwa krzyżowania i~mutacji algorytm ewolucyjny nigdy nie osiągnął optimum.
  Wraz ze wzrostem rozmiaru problemu, otrzymywane wyniki były coraz bardziej odległe od 
@@ -436,7 +469,7 @@ poszukiwanego optimum -- w~przypadku 48 miast zauważalne jest znaczące pogorsz
 do wyników otrzymywanych dla problemów o~mniejszym rozmiarze tj. 17, 26, czy 42.\\
 \\
 Analiza wpływu wartości prawdopodobieństwa mutacji i~krzyżowania pozwala stwierdzić, 
-że większy wpływ na działanie algorytmu ewolucyjnego dla problemu komiwojażera miała mutacja. 
+że większy wpływ na działanie algorytmu ewolucyjnego dla przedstawionego problemu miała mutacja. 
 Całkowite wyłącznie mutacji wyraźnie pogarsza jakość otrzymywanych wyników. 
 Sama jej obecność (nawet z~niewielkim prawdopodobieństwem) wyraźnie wpływa na poprawę 
 otrzymywanych wyników. Ma to swoje uzasadnienie praktyczne - mając dowolny cykl, łatwo
@@ -449,9 +482,9 @@ więc istnieje bardzo mała szansa poprawy. Niemniej obecność operatora krzyż
 a~wartość prawdopodobieństwa krzyżowania powinna przyjmować dosyć dużą wartość.\\
 \\
 W~porównaniu do algorytmu zachłannego, algorytm ewolucyjny zdecydowanie gorzej poradził sobie 
-z~problemem komiwojażera. Warto zatem do populacji początkowej dla algorytmu ewolucyjnego
+z~problemem poszukiwania optymalnej trasy. Warto zatem do populacji początkowej dla algorytmu ewolucyjnego
 wprowadzać po kilka różnych rozwiązań wygenerowanych przez algorytm zachłanny. Gwarantuje to znacznie lepszy
-start, bliżej optimum globalnego. 
+start, bliżej optimum globalnego. Taka modyfikacja pozwala na uzyskanie znacznie lepszych wyników, zwłaszcza w przypadku problemów o dużym rozmiarze.
 
 \nocite{*}
 \bibliographystyle{plain}
