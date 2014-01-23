@@ -47,12 +47,23 @@ public class Osm
 			}
 		}
 
+		BestResult bestResult = null;
 		for (int i = 0; i < AlgorithmSettings.RUNS; i++)
 		{
-			BestResult bestResult = optimizer.optimize();
-			System.out.println(bestResult.getOptimum());
-			System.out.println(printMappedSolution(graph.getMapping(), bestResult.getSolution()));
+			if (bestResult == null) {
+				bestResult = optimizer.optimize();
+			}
+			else 
+			{
+				BestResult result = optimizer.optimize();
+				if (result.getOptimum() < bestResult.getOptimum())
+				{
+					bestResult = result;
+				}
+			}
 		}
+		System.out.println(bestResult.getOptimum());
+		System.out.println(printMappedSolution(graph.getMapping(), bestResult.getSolution()));
 	}
 	
 	private static String printMappedSolution(Map<Integer, Coords> mapping, Solution solution) {
