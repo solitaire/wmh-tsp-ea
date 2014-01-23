@@ -1,7 +1,7 @@
 package optimization.ea;
 
 import optimization.Solution;
-import testing.Main;
+import settings.AlgorithmSettings;
 
 public class Mutation
 {
@@ -19,11 +19,11 @@ public class Mutation
 		final int repeats = (int) Math.ceil(d * mutationProbability);
 		for (int r = 0; r < repeats; r++)
 		{
-			final int i = Main.rand.nextInt(d);
+			final int i = AlgorithmSettings.rand.nextInt(d);
 			int j;
 			do
 			{
-				j = Main.rand.nextInt(d);
+				j = AlgorithmSettings.rand.nextInt(d);
 			}
 			while (i == j);
 

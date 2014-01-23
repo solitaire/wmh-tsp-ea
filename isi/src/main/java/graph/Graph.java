@@ -1,5 +1,7 @@
 package graph;
 
+import java.io.InputStream;
+
 
 public class Graph
 {
@@ -14,6 +16,12 @@ public class Graph
 		this.weights = weights;
 		this.D = weights.length;
 	}
+	
+    public Graph(InputStream stream)
+    {
+       this.weights = GraphReader.readWeights(stream);
+       this.D = weights.length;
+    }
 
 	@Override
 	public String toString()

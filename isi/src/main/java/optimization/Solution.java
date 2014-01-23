@@ -3,7 +3,7 @@ package optimization;
 import java.util.Arrays;
 import java.util.Collections;
 
-import testing.Main;
+import settings.AlgorithmSettings;
 
 public class Solution
 {
@@ -17,7 +17,7 @@ public class Solution
 		{
 			cities[i] = i;
 		}
-		Collections.shuffle(Arrays.asList(cities), Main.rand);
+		Collections.shuffle(Arrays.asList(cities), AlgorithmSettings.rand);
 	}
 
 	/** Deep copy. */

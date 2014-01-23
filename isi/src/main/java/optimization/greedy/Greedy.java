@@ -10,7 +10,7 @@ import java.util.Set;
 import optimization.BestResult;
 import optimization.Optimizer;
 import optimization.Solution;
-import testing.Main;
+import settings.AlgorithmSettings;
 
 public class Greedy extends Optimizer
 {
@@ -26,7 +26,7 @@ public class Greedy extends Optimizer
 	{
 		final List<Integer> visitedCities = new ArrayList<Integer>(D);
 		double length = 0.0;
-		final int START_CITY = Main.rand.nextInt(D);
+		final int START_CITY = AlgorithmSettings.rand.nextInt(D);
 		visitedCities.add(START_CITY);
 		final Set<Integer> unvisited = new HashSet<Integer>(D);
 		for (int i = 0; i < D; i++)

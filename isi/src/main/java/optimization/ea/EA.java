@@ -6,7 +6,7 @@ import optimization.Evaluator;
 import optimization.Optimizer;
 import optimization.Solution;
 import optimization.greedy.Greedy;
-import testing.Main;
+import settings.AlgorithmSettings;
 
 public class EA extends Optimizer
 {
@@ -51,7 +51,7 @@ public class EA extends Optimizer
 			for (int i = 0; i < N; i++)
 			{
 				final Solution a = select(children);
-				if (Main.rand.nextDouble() < crossoverProbability)
+				if (AlgorithmSettings.rand.nextDouble() < crossoverProbability)
 				{
 					final Solution b = select(children);
 					children.solutions[i] = mutation.mutate(Crossover.crossover(a, b));
@@ -69,7 +69,7 @@ public class EA extends Optimizer
 
 	private Solution select(Population pop)
 	{
-		return pop.solutions[Main.rand.nextInt(N)];
+		return pop.solutions[AlgorithmSettings.rand.nextInt(N)];
 	}
 
 	private void succesion(Population actual, Population children, Evaluator evaluator)

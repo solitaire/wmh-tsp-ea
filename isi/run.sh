@@ -26,5 +26,5 @@ fi
 
 ansfile="${1%.*}_$pm"_"$pc$g.ans"
 
-mvn -q exec:java -Dexec.mainClass=testing.Main -Dexec.args="$pm $pc $4" < $1 > $ansfile
+mvn -q exec:java -Dexec.mainClass=testing.Osm -Dexec.args="$pm $pc $4" < $1 > $ansfile
 echo $ansfile `date`

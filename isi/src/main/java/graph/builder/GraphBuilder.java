@@ -1,11 +1,14 @@
 package graph.builder;
 
-import graph.Graph;
+import graph.Coords;
+import graph.OsmGraph;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.graphhopper.GHRequest;
@@ -15,15 +18,19 @@ import com.graphhopper.GraphHopperAPI;
 
 public class GraphBuilder
 {
-	public static Graph build(final InputStream in, final String osmMapName) 
+	public static OsmGraph build(final InputStream in, final String osmMapName) 
 	{
 		// Sets default locale to always have 1.23 not 1,23
 		Locale.setDefault(Locale.US);
 		final Scanner scanner = new Scanner(System.in);
+		Map<Integer, Coords> mapping = new HashMap<Integer, Coords>();
 		List<Coords> coords = new ArrayList<Coords>();
+		int i = 0;
 		while (scanner.hasNext()) 
 		{
-			coords.add(new Coords(scanner.nextDouble(), scanner.nextDouble()));
+			Coords cityCoords = new Coords(scanner.nextDouble(), scanner.nextDouble());
+			coords.add(cityCoords);
+			mapping.put(i++, cityCoords);
 		}
 		
 		int D = coords.size();
@@ -45,6 +52,6 @@ public class GraphBuilder
 			}
 		}
 		
-		return new Graph(weights);
+		return new OsmGraph(weights, mapping);
 	}
 }

@@ -1,6 +1,6 @@
-package graph.builder;
+package graph;
 
-class Coords
+public class Coords
 {
 	private final double latitute;
 	private final double longitute;
@@ -19,5 +19,11 @@ class Coords
 	public double getLatitude()
 	{
 		return latitute;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "[ " + getLatitude() + " " + getLongitute() + " ]";
 	}
 }

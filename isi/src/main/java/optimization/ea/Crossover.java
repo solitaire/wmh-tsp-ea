@@ -7,7 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import optimization.Solution;
-import testing.Main;
+import settings.AlgorithmSettings;
 
 public class Crossover
 {
@@ -15,8 +15,8 @@ public class Crossover
 	{
 		final Solution child = new Solution(parent1);
 
-		int i = Main.rand.nextInt(parent1.cities.length);
-		int j = Main.rand.nextInt(parent2.cities.length);
+		int i = AlgorithmSettings.rand.nextInt(parent1.cities.length);
+		int j = AlgorithmSettings.rand.nextInt(parent2.cities.length);
 		if (i > j)
 		{
 			final int temp = i;
