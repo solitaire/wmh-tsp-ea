@@ -16,6 +16,9 @@ public class Main
 
 	private final static double DEFAULT_MUTATION_PROBABILITY = 0.1;
 	private final static double DEFAULT_CROSSOVER_PROBABILITY = 0.9;
+	private final static int DEFAULT_N_TO_D_RATIO = 10;
+	private final static boolean DEFAULT_GREEDY = false;
+	private final static boolean DEFAULT_GREEDY_START = false;
 	private final static int RUNS = 15;
 
 	public static void main(String[] args)
@@ -26,12 +29,14 @@ public class Main
 
 		double mutationProbability = DEFAULT_MUTATION_PROBABILITY;
 		double crossoverProbability = DEFAULT_CROSSOVER_PROBABILITY;
-		Optimizer optimizer = new EA(graph, mutationProbability, crossoverProbability);
+		int nToDRatio = DEFAULT_N_TO_D_RATIO;
+		boolean greedy = DEFAULT_GREEDY;
+		boolean greedyStart = DEFAULT_GREEDY_START;
 		if (args.length >= 1)
 		{
 			if (args[0].equals("greedy"))
 			{
-				optimizer = new Greedy(graph);
+				greedy = true;
 			}
 			else
 			{
@@ -44,12 +49,19 @@ public class Main
 		}
 		if (args.length >= 3)
 		{
-			if (args[2].equals("greedystart"))
-			{
-				optimizer = new EA(graph, mutationProbability, crossoverProbability, true);
-			}
+			nToDRatio = Integer.parseInt(args[2]);
 		}
-
+		if (args.length >= 4 && args[3].equals("greedystart"))
+		{
+			greedyStart = true;
+		}
+		
+		Optimizer optimizer = new EA(graph, mutationProbability, crossoverProbability, nToDRatio, greedyStart);
+		if (greedy)
+		{
+			optimizer = new Greedy(graph);
+		}
+		
 		for (int i = 0; i < RUNS; i++)
 		{
 			System.out.println(optimizer.optimize());

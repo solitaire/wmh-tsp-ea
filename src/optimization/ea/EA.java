@@ -10,21 +10,20 @@ import testing.Main;
 public class EA extends Optimizer
 {
 	private final int N;
-	private final int N_TO_D_RATIO = 10;
 	private final int FUN_EVALS_TO_D_RATIO = 100000;
 	private final Mutation mutation;
 	private final double crossoverProbability;
 	private final boolean greedyStart;
 
-	public EA(Graph graph, double mutationProbability, double crossoverProbability)
+	public EA(Graph graph, double mutationProbability, double crossoverProbability, int nToDRatio)
 	{
-		this(graph, mutationProbability, crossoverProbability, false);
+		this(graph, mutationProbability, crossoverProbability, nToDRatio, false);
 	}
 
-	public EA(Graph graph, double mutationProbability, double crossoverProbability, boolean greedyStart)
+	public EA(Graph graph, double mutationProbability, double crossoverProbability, int nToDRatio, boolean greedyStart)
 	{
 		super(graph);
-		N = N_TO_D_RATIO * D;
+		N = nToDRatio * D;
 		this.mutation = new Mutation(mutationProbability);
 		this.crossoverProbability = crossoverProbability;
 		this.greedyStart = greedyStart;

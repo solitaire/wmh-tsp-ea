@@ -8,7 +8,7 @@ fi
 
 if [ $# -lt 1 ]
 then
-	echo "Usage: $0 TEST_FILE.in [MUTATION_PROBABILITY] [CROSSOVER_PROBABILITY] [greedystart]"
+	echo "Usage: $0 TEST_FILE.in [MUTATION_PROBABILITY] [CROSSOVER_PROBABILITY] [N_TO_D_RATIO] [greedystart]"
 	return
 fi
 
@@ -24,13 +24,19 @@ then
 	pc=$3
 fi
 
-g=""
+ratio=10
 if [ $# -gt 3 ]
 then
-	g="g"
+	ratio=$4
 fi
 
-ansfile="${1%.*}_$pm"_"$pc$g.ans"
+g=""
+if [ $# -gt 4 ]
+then
+	g="greedystart"
+fi
 
-java -cp bin testing/Main $pm $pc $4 < $1 > $ansfile
+ansfile="${1%.*}_$ratio.ans"
+
+java -cp bin testing/Main $pm $pc $ratio $g < $1 > $ansfile
 echo $ansfile `date`

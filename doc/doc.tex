@@ -24,7 +24,8 @@ Przedstawiona została reprezentacja rozwiązania, metoda sukcesji oraz operator
 Z punktu widzenia przydatności projektowanego algorytmu, istotne jest przetestowanie go dla różnych parametrów, w szczególności dla:
 \begin{itemize}
 	\item różnych wartości prawdopodobieństwa mutacji $p_m$ i krzyżowania $p_c$,
-	\item grafów o różnej liczbie wierzchołków $d$.
+	\item grafów o różnej liczbie wierzchołków $d$,
+	\item różnej wielkości populacji $n$.
 \end{itemize}
 
 \section{Założenia}
@@ -160,7 +161,11 @@ Wyjściem jest jedna populacja o rozmiarze $n$.
 	\paragraph{Rozwiązanie}
 		Rozwiązanie jest reprezentowane jako tablica $d$ liczb całkowitych, której elementy są numerami miast.
 	\paragraph{Populacja}
-		Populacja jest reprezentowana jako tablica rozwiązań. Rozmiar populacji jest stały i równy $n = 10d$.
+		Populacja jest reprezentowana jako tablica rozwiązań. Rozmiar populacji
+jest zależny od liczby miast $d$.
+Przy testowaniu $p_m$ oraz $p_c$ rozmiar populacji jest stały i równy $n = 10d$.
+Testując wpływ rozmiaru populacji, to prawdopodobieństwa są stałe, $p_m=0,1$ oraz $p_c=0,9$,
+zaś rozmiar populacji $n$ wynosi $d, 10d$ lub $100d$.
 
 \subsection{Założenia programu}
 \begin{description}
@@ -315,7 +320,7 @@ kosztem cyklu a~kosztem obliczonym przez algorytm.
     48 & 10628\\
     \hline
   \end{tabular}
-  \caption{Długość optymalnych cykli}
+  \caption{Długość optymalnych cykli.d}
 \end{table}
 
 \section{Wyniki testów}
@@ -326,7 +331,7 @@ kosztem cyklu a~kosztem obliczonym przez algorytm.
 \mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/old/17m.png} }\quad
 \subfigure[$p_c = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/17m.png} } 
 }
-\caption{Wpływ mutacji na działanie algorytmu - 17 miast}
+\caption{Wpływ mutacji na działanie algorytmu - 17 miast.}
 \end{figure}
 
 \begin{figure}[H]
@@ -334,7 +339,7 @@ kosztem cyklu a~kosztem obliczonym przez algorytm.
 \mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/old/26m.png} }\quad
 \subfigure[$p_c = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/26m.png} } 
 }
-\caption{Wpływ mutacji na działanie algorytmu - 26 miast}
+\caption{Wpływ mutacji na działanie algorytmu - 26 miast.}
 \end{figure}
 
 \begin{figure}[H]
@@ -342,7 +347,7 @@ kosztem cyklu a~kosztem obliczonym przez algorytm.
 \mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/old/42m.png} }\quad
 \subfigure[$p_c = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/42m.png} } 
 }
-\caption{Wpływ mutacji na działanie algorytmu - 42 miasta}
+\caption{Wpływ mutacji na działanie algorytmu - 42 miasta.}
 \end{figure}
 
 \begin{figure}[H]
@@ -350,7 +355,7 @@ kosztem cyklu a~kosztem obliczonym przez algorytm.
 \mbox{\subfigure[$p_c = 0,9$]{\includegraphics[width=.5\textwidth]{../tests/old/48m.png} }\quad
 \subfigure[$p_c = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/48m.png} } 
 }
-\caption{Wpływ mutacji na działanie algorytmu - 48 miast}
+\caption{Wpływ mutacji na działanie algorytmu - 48 miast.}
 \end{figure}
 
 \subsection{Wpływ prawdopodobieństwa krzyżowania}
@@ -359,7 +364,7 @@ kosztem cyklu a~kosztem obliczonym przez algorytm.
 \mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/old/17c.png} }\quad
 \subfigure[$p_m = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/17c.png} } 
 }
-\caption{Wpływ krzyżowania na działanie algorytmu - 17 miast}
+\caption{Wpływ krzyżowania na działanie algorytmu - 17 miast.}
 \end{figure}
 
 \begin{figure}[H]
@@ -367,7 +372,7 @@ kosztem cyklu a~kosztem obliczonym przez algorytm.
 \mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/old/26c.png} }\quad
 \subfigure[$p_m = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/26c.png} } 
 }
-\caption{Wpływ krzyżowania na działanie algorytmu - 26 miast}
+\caption{Wpływ krzyżowania na działanie algorytmu - 26 miast.}
 \end{figure}
 
 \begin{figure}[H]
@@ -375,7 +380,7 @@ kosztem cyklu a~kosztem obliczonym przez algorytm.
 \mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/old/42c.png} }\quad
 \subfigure[$p_m = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/42c.png} } 
 }
-\caption{Wpływ krzyżowania na działanie algorytmu - 42 miasta}
+\caption{Wpływ krzyżowania na działanie algorytmu - 42 miasta.}
 \end{figure}
 
 \begin{figure}[H]
@@ -383,8 +388,29 @@ kosztem cyklu a~kosztem obliczonym przez algorytm.
 \mbox{\subfigure[$p_m = 0,1$]{\includegraphics[width=.5\textwidth]{../tests/old/48c.png} }\quad
 \subfigure[$p_m = 0$]{\includegraphics[width=.5\textwidth]{../tests/normal/48c.png} } 
 }
-\caption{Wpływ krzyżowania na działanie algorytmu - 48 miast}
+\caption{Wpływ krzyżowania na działanie algorytmu - 48 miast.}
 \end{figure}
+
+\subsection{Wpływ rozmiaru populacji}
+
+Przetestowano jak zmianiają się wyniki algorytmu ewolucyjnego ($p_m=0,1$, $p_c=0,9$)
+dla różnych rozmiarów populacji. Rozmiar populacji $n$ przyjmował wartości $d, 10d, 100d$, gdzie $d$
+to liczba miast. Dystrybuanty empiryczne przedstawiono poniżej.
+
+\begin{figure}[H]
+\centering
+\mbox{\subfigure[17 miast]{\includegraphics[width=.5\textwidth]{../tests/n_to_d_ratio/17.png} }\quad
+\subfigure[48 miast]{\includegraphics[width=.5\textwidth]{../tests/n_to_d_ratio/48.png} } 
+}
+\caption{Wpływ rozmiaru populacji na osiągane wyniki.}
+\end{figure}
+
+Niemal zawsze największy rozmiar populacji sprawdzał się najlepiej. Patrząc
+na przypadek z 48 miastami można również zauważyć, że populacja wielkości $10d$
+lepiej się sprawdzała niż populacja 10 razy mniejsza. Wyniki praktyczne są zgodne z teorią,
+w której mały rozmiar populacji (rzędu $d$) nie jest dobrym pomysłem, ze względu na 
+mniejszą różnorodność wartości dla jednej cechy chromosomu, co ma bezpośrednie odzwierciedlenie
+w jakości otrzymywanych wyników.
 
 \subsection{Porównanie z algorytmem zachłannym}
 
@@ -454,7 +480,9 @@ Niebieska linia przedstawia funkcję $54,25x^2 - 170,55x + 128,75$ aproksymując
 złożoność czasową testowanego algorytmu ewolucyjnego. Funkcja ta została znaleziona przy pomocy
 \url{http://www.wolframalpha.com}. Podwojenie wielkości danych wejściowych $d$ (liczby miast) powoduje
 kwadratowy przyrost długości obliczeń, stąd złożoność obliczeniowa 
-testowanego algorytmu to O$(d^2)$.
+testowanego algorytmu to O$(d^2)$. Dzieje się tak, ponieważ rozmiar populacji $n$ rośnie
+proporcjonalnie do $d$ oraz jednocześnie liczba wywołań funkcji oceny rośnie o $10^5d$.
+Stąd całkowity czas testu rośnie o O$(d^2)$.
 
 \section{Wnioski}
 
