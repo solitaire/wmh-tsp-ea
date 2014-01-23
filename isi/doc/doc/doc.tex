@@ -29,7 +29,7 @@ Z punktu widzenia przydatności projektowanego algorytmu, istotne jest przetesto
 
 \section{Założenia}
 Aplikacja będzie pracować w trybie konsolowym. Na standardowe wejście podawany będzie plik zawierający zestaw współrzędnych geograficznych punktów, które mają zostać odwiedzone przez kuriera. Do obliczenia odległości pomiędzy poszczególnymi punktami zostaną wykorzystane dane pozyskane z \url{http://www.openstreetmap.org/}.
-Program będzie wypisywał odpowiedź na standardowe wyjście.
+Program będzie wypisywał odpowiedź składającą się z kosztu przejazdu oraz kolejnych miast, które należy odwiedzić na standardowe wyjście.
 
 \subsection{Reprezentacja rozwiązań}
 
@@ -165,9 +165,18 @@ Wyjściem jest jedna populacja o rozmiarze $n$.
 \subsection{Założenia programu}
 \begin{description}
 	\item[Wejście] \hfill \\
-Wejściem dla algorytmu %TODO opisać jaki format przyjmuje aplikacja
+Wejściem dla algorytmu jest plik tekstowy zawierający w kolejnych liniach współrzędne geograficzne miejsc, które ma odwiedzić kurier. 
+$
+52.259 21.020 \\ 
+50.060 19.959 \\
+54.360 18.639 \\
+52.399 16.900 \\
+53.120 18.010 \\
+51.110 17.030 \\
+51.770 19.459 \\
+$
 	\item[Wyjście] \hfill \\
-	Wyjściem algorytmu jest plik tekstowy zawierający koszt najtańszego cyklu znalezionego przez algorytm.
+	Wyjściem algorytmu jest plik tekstowy zawierający koszt najtańszego cyklu znalezionego przez algorytm oraz współrzędne kolejnych miast, które należy odwiedzić.
 	\item[Kryteria stopu] \hfill \\
 	Warunkiem zatrzymania algorytmu jest wywołanie $10^5d$ razy funkcji oceny, gdzie $d$ to rozmiar problemu (liczba miast).
 	\item[Parametry] \hfill \\
@@ -177,24 +186,21 @@ Wejściem dla algorytmu %TODO opisać jaki format przyjmuje aplikacja
 			\item prawdopodobieństwo krzyżowania $p_c$ (domyślna wartość 0,1)
 		\end{itemize}
 		W przypadku, gdy parametry te nie zostaną sprecyzowane, stosowane są wartości domyślne.
-	\item[Złożoność obliczeniowa] \hfill \\
-	Złożoność obliczeniowa operatorów genetycznych: mutacji oraz krzyżowania jest równa $O(d)$, 
-gdzie $d$ to rozmiar rozwiązania (liczba miast). Złożoność obliczeniowa selekcji wynosi $O(1)$. Złożoność obliczeniowa
-sukcesji jest liniowa względem liczby rozwiązań w populacji $n$, czyli $O(n)$.
+		\item Obliczanie odległości pomiędzy miastami
+		Do obliczenia odległości pomiędzy punktami na trasie kuriera zostaną wykorzystane dane pozyskane z~OpenStreetMap oraz biblioteka graphhopper\footnote{\url{http://graphhopper.com}}.
 
 \end{description}
 
-\section{Projekt testów}
-%TODO tu opisać, że na tych grafach testowaliśmy dobór odpwiednich parametrów,
-% jescze przed testowaniem na rzeczywistych danych z osm
-W ramach testów działanie algorytmu ewolucyjnego zostanie zweryfikowane dla szeregu problemów o~różniej wielkości. Szczególnie istotne jest zbadanie skuteczności algorytmu w~zależności od doboru wartości:
+\section{Testy algorytmu ewolucyjnego}
+Początkowo działanie algorytmu ewolucyjnego zostało zweryfikowane na zestawie danych, dla których znane były rozwiązania optymalne. W tym celu aplikacja została dostosowana do obsługi drugiego formatu danych wejściowych - macierzy zawierającej koszty połączeń pomiędzy poszczególnymi miastami.
+Działanie algorytmu zostało zbadane dla następujących parametrów:
 \begin{itemize}
 	\item prawdopodobieństwa mutacji $p_m$,
 	\item prawdopodobieństwa krzyżowania $p_c$,
 	\item liczby miast.
 \end{itemize}
 
-Podczas testowania będziemy analizować następujące kombinacje wartości wartości prawdopodobieństwa mutacji $p_m$ i prawdopodobieństwa krzyżowania $p_c$.
+Podczas testowania analizowane były następujące kombinacje wartości wartości prawdopodobieństwa mutacji $p_m$ i prawdopodobieństwa krzyżowania $p_c$.
 
 \bigskip
 
@@ -250,18 +256,16 @@ Dla wyłączonej mutacji $p_m = 0$ - zbadanie wpływu zmian $p_c$:
 
 \bigskip
 
-Pojedynczy przypadek testowy polega na uruchomieniu algorytmu ewolucyjnego dla określonego 
+Pojedynczy przypadek testowy polegał na uruchomieniu algorytmu ewolucyjnego dla określonego 
 problemu i zadanych wartości prawdopodobieństwa mutacji $p_m$ i prawdopodobieństwa 
-krzyżowania $p_c$. Każdy przypadek testowy uruchomiony będzie niezależnie $RUNS = 15$ razy.\\
+krzyżowania $p_c$. Każdy przypadek testowy uruchomiony był niezależnie $RUNS = 15$ razy.\\
 \\
-Poszczególne przypadki testowe będą uruchamiane dla ustalonej wartości ziarna generatora 
+Poszczególne przypadki testowe uruchamiano dla ustalonej wartości ziarna generatora 
 liczb pseudolosowych -- w ten sposób sekwencje liczb pseudolosowych dla każdej wersji 
-algorytmu będą jednakowe, co umożliwi porównanie ich skuteczności.\\
+algorytmu były jednakowe, co umożliwi porównanie ich skuteczności.\\
 \\
-Do testowania zaimplementowanego algorytmu ewolucyjnego wykorzystane zostaną zestawy danych,
-dla których z~góry znany jest koszt optymalnego cyklu. W~celu porównania skuteczności 
-poszczególnych ustawień algorytmu, dla każdego z~przypadków testowych zostaną wykreślone 
-dystrybuanty empiryczne -- miarą jakości algorytmu będzie różnica pomiędzy optymalnym 
+W~celu porównania skuteczności poszczególnych ustawień algorytmu, dla każdego z~przypadków testowych zostały wykreślone 
+dystrybuanty empiryczne -- miarą jakości algorytmu jest różnica pomiędzy optymalnym 
 kosztem cyklu a~kosztem obliczonym przez algorytm.
 
 \begin{table}[h]
@@ -376,7 +380,8 @@ dobre, znacznie lepsze niż te otrzymywane przez którykolwiek algorytm ewolucyj
 \end{table}
 
 \subsection{Testy dla danych pochodzących z OpenStreetMap}
-%TODO tu opisać testy na danych z osm, losowe miasta itd
+Na potrzeby testów aplikacji wykorzystaliśmy dane OpenSteetMap dla obszaru Polski dostępne na stronie\footnote{{http://download.geofabrik.de/europe/poland.html}}. Dane te zostały przetworzone za pomocą biblioteki graphhopper, a następnie wykorzystane do obliczania odległości drogowych pomiędzy zadanymi punktami/miastami. 
+
 \subsection{Czas wykonania dla grafów losowych}
 
 Przebadano czas wykonania na grafach losowych o 5, 10, 20 oraz 40 miastach.
@@ -385,7 +390,7 @@ Badanym algorytmem był algorytm ewolucyjny z $p_m=0,1$ oraz $p_c=0,9$.
 Losowy graf o $d$ miastach generowano w następujący sposób:
 
 \begin{enumerate}
- \item Pobierz $d$ losowych miast Polski z \url{http://www.openstreetmap.org/}.
+ \item Pobierz $d$ losowych położeń miast Polski.
  \item Na podstawie ich położeń wygeneruj wejściową macierz odległości.
 \end{enumerate}
 
